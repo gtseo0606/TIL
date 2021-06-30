@@ -1,0 +1,23 @@
+opencv 원하는 위치에 윈도우 출력하기
+​
+#1) ndarray의 이용한 레이아웃을 실행
+# 페이지 레이아웃은 컴퓨터 그래픽 디자인이나 소프트웨어 디자인에서
+# 각 구성요소를 제한된 공간 안에 효과적으로 배열하는 일을 의미한다.
+​
+import numpy as np
+import cv2
+image = np.zeros((200,400), np.uint8)
+image[:] = 200 #흰색 바탕
+​
+cv2.namedWindow("test01", cv2.WINDOW_AUTOSIZE)
+cv2.namedWindow("test02")
+​
+#실행 했을 때 전체모니터를 기준으로 해당 좌표에 생성된다
+cv2.moveWindow("test01", 150, 150)
+cv2.moveWindow("test02", 400, 50)
+​
+cv2.imshow("test01", image)
+cv2.imshow("test02", image)
+cv2.waitKey(0)
+cv2.destroyAllWindows() # 객체 소멸
+​​
