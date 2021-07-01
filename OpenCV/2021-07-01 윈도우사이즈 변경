@@ -1,0 +1,26 @@
+opencv 윈도우 사이즈 변경
+​
+#2) ndarray의 이용한 레이아웃을 실행 후 윈도우를 리사이즈
+# 윈도우 사이즈 변경 resizeWindow(타이틀, w, h)
+import numpy as np
+import cv2
+image = np.zeros((200,300), np.uint8)
+image.fill(255) # 흰색이 되는 행렬
+​
+cv2.namedWindow("test01", cv2.WINDOW_AUTOSIZE) # 사이즈 고정
+cv2.namedWindow("test02", cv2.WINDOW_NORMAL) # 사이즈 변화 = 마우스로 드래그 하면 더 넓어짐
+​
+#cv2.WINDOW_NORMAL: 원본이미지 크기로 만들 수 있지만 사용자가 크기를 바꿀 수 있다.
+#cv2.WINDOW_AUTOSIZE: 원본이미지 크기로 고정하여 윈도우를 생성한다.
+​
+cv2.imshow("test01", image)
+cv2.imshow("test02", image)
+​
+#윈도우 사이즈 변경 => 더 넓어짐
+cv2.resizeWindow("test01", 400, 300)
+cv2.resizeWindow("test02", 400, 300)
+​
+cv2.waitKey(0)
+cv2.destroyAllWindows() # 객체 소멸
+​
+​​
