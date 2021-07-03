@@ -1,0 +1,22 @@
+opencv 트랙바 만들기
+​
+# 4) createTrackbar 생성
+#(const String & trackbarname, const String&winname, int*value, int count, trackbar)
+# 트랙바 이름, 윈도우 이름, 트랙바 값, 개수, onChange, 파람)
+import numpy as np
+import cv2
+​
+def onChange(value): #트랙바의 콜백함수
+   global image    #전역변수
+   res = value  -  int(image[0][0]) #트랙바 값 - 이미지 화소
+   image = image + res
+   print(image[0][0], res, image)
+   cv2.imshow("test01", image)
+   
+image = np.zeros((200,600), np.uint8) # 배열로 이미지 생성
+cv2.imshow("test01", image)
+​
+# 트랙바 연동
+cv2.createTrackbar("Mytrack", "test01", image[0][0], 255, onChange) #마우스 콜백 함수
+cv2.waitKey(0)
+cv2.destroyAllWindows() # 객체 소멸​
