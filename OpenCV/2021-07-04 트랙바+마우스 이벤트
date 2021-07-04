@@ -1,0 +1,34 @@
+opencv 트랙바 + 마우스 이벤트
+​
+# 5) createTrackbar 생성
+#(const String & trackbarname, const String&winname, int*value, int count, trackbar)
+# 트랙바 이름, 윈도우 이름, 트랙바 값, 개수, onChange, 파람)
+import numpy as np
+import cv2
+​
+def onChange(value): #트랙바의 콜백함수 # value = 트랙바를 움직일때 값
+   global image    #전역변수
+   res = value  -  int(image[0][0]) #트랙바 값 - 이미지 화소 # 1번 50 = 50-0 2번 -20 = 30 - 50
+   image = image + res # 1번 50 = 0 + 50 2번 30 = -20 + 50
+   print(image[0][0], res, image)
+   cv2.imshow("test01", image)
+​
+def onMouse(event, x, y, flags, param): #마우스 콜백함수를 통해서 트랙바 위치 변경
+   global image #전역변수
+   if event == cv2.EVENT_LBUTTONDOWN: # 트랙바를 누른다
+       if(image[0][0] >= 10):
+           image = image - 10
+       cv2.setTrackbarPos("MyTrack", "test01", image[0][0])
+       
+   elif event == cv2.EVENT_RBUTTONDOWN:
+       print("오른쪽 마우스 클릭", event, x, y, flags, param)    
+​
+image = np.zeros((200,600), np.uint8) # 배열로 이미지 생성
+cv2.imshow("test01", image)
+​
+# 트랙바 연동
+cv2.createTrackbar("Mytrack", "test01", image[0][0], 255, onChange) #마우스 콜백 함수
+cv2.setMouseCallback("test01", onMouse) #마우스 콜백 함수
+​
+cv2.waitKey(0)
+cv2.destroyAllWindows() # 객체 소멸​
