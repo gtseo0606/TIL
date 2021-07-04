@@ -1,0 +1,40 @@
+opencv 왼쪽마우스 - 사각형 그리기, 오른쪽 마우스 - 원그리기
+​
+#6) 도형그리기와 이벤트
+# 왼쪽 버튼을 클릭하게 되면 사각형을 그리자
+import numpy as np
+import cv2
+​
+def onMouse(event, x, y, flags, param): #마우스 콜백함수를 통해서 트랙바 위치 변경
+   global pt #전역변수
+   if event == cv2.EVENT_LBUTTONDOWN:
+       if pt[0] < 0:
+           pt= (x,y) # 마우스 포인터의 xy값을 지정
+       else:
+           cv2.rectangle(image, pt, (x,y), (255,0,0), 2) # (255,0,0) = 파란색, 2 = 두께
+           cv2.imshow("Draw and Event", image)
+           pt = (-1,-1) # 초기값 재설정
+​
+   elif event == cv2.EVENT_RBUTTONDOWN:
+       #cv2.circle(image, (x,y), 30, (0,0,255), 2)
+       # 두 좌표간의 거리
+       if pt[0] < 0:
+           pt= (x,y) # 마우스 포인터의 xy값을 지정
+       else:
+           rx, ry = pt[0]-x, pt[1]-y
+           r = int(np.sqrt(rx*rx + ry*ry)) # 두 점 사이의 길이가 반지름이 됨 # 직사각형의 빗변공식
+           cv2.circle(image, pt, r, (0,0,255), 2) # (0,0,255) = 빨간색, 2 = 두께
+           cv2.imshow("Draw and Event", image)
+           pt = (-1,-1) # 초기값 재설정
+​
+image = np.full((300,500,3), (255,255,255), np.uint8) # 배열로 이미지 생성
+# 세로 300, 가로 500, 흰색바탕
+​
+#초기좌표
+pt = (-1,-1)
+cv2.imshow("Draw and Event", image)
+cv2.setMouseCallback("Draw and Event", onMouse) #마우스 콜백 함수
+​
+cv2.waitKey(0)
+cv2.destroyAllWindows() # 객체 소멸
+​​
