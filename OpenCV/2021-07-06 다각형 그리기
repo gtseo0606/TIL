@@ -1,0 +1,19 @@
+opencv 다각형 그리기
+​
+import numpy as np
+import cv2 as cv
+​
+img = np.zeros((512,512,3), np.uint8)
+# 512 = 큰 배열개수, 512 = 작은 배열개수, 3 = 배열 안의 원소개수
+​
+pts = np.array([[10,5],[20,30],[70,20],[50,10]], np.int32)
+pts = pts.reshape((-1,1,2))
+# 3차원 배열로 큰 배열의 행/큰 배열의 열/작은 배열 개수
+# => 큰 배열 하나 (-1은 의미없다고 생각)
+img = cv.polylines(img, [pts], True, (0,255,255))
+# 다각형 [pts] = 총 4개의 좌표, True = 도형닫힘 유무, (0,255,255) = 녹+빨=노랑
+#pts
+cv.imshow("p", img)
+cv.waitKey(0)
+cv.destroyAllWindows()
+​​
