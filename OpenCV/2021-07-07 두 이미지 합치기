@@ -1,0 +1,78 @@
+opencv 두 이미지 합치기
+​
+# 7) 이진화 이미지를 만들어서 bit 연산을 구현
+# 2개의 이미지를 가져다가overlap을 하고 싶다
+# 1. 이미지 호출
+# 2. 영상 이진화
+# 3. 각각의 영역 추출 = 마스크
+# 4. 영상 사이즈 맞춤
+# 5. 논리곱과 마스크를 이용해서 관심영역을 복사
+# 6. 합성
+# 7. 합성 영상을 원본에 복사
+​
+#https://webnautes.tistory.com/1254
+​
+import cv2
+import numpy as np
+​
+# 1. 이미지 호출
+image = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\pjh5.jpg')
+logo = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\opencv_logo.png')
+​
+if image is None or logo is None :
+   raise Exception("파일 없음")
+​
+# 행렬로만 이진화
+# 2. 영상 이진화
+masks = cv2.threshold(logo, 220, 255, cv2.THRESH_BINARY)[1] # 튜플로 리턴( 임계치, 값)[1]로 값만 추출
+# 220~255(흰색) 사이에 검은색을 제외한 모든 색이 들어있음
+# 220 이하는 모두 검은색, 이상은 모두 흰색으로
+​
+masks= cv2.split(masks) #색상분할 #배열 분리 #3개의 채널(색상)이라 3개로 나뉨
+masks # 원본 그림
+​
+# 이미지도 이진화
+# 3. 각각의 영역 추출 = 마스크
+#masks[0] 파랑, masks[1] 녹색, masks[2] 빨강 -> 뒤로 갈수로 밝아짐
+fg_mask = cv2.bitwise_or(masks[0], masks[1]) # 전경 통과
+fg_mask = cv2.bitwise_or(masks[2], fg_mask) # 배경 검은색(0), 글자 흰색(255)
+bg_mask = cv2.bitwise_not(fg_mask) # 이미지 반전 # 배경 흰색(255), 글자 검은색(0)
+​
+​
+# 4. 영상 사이즈에 위치를 맞춤
+(H,W), (h,w) = image.shape[:2], logo.shape[:2] # 두개의 이미지 사이즈를 각각 리턴
+x,y = (W-w)//2, (H-h)//2
+# 영역지정
+roi = image[y:y+h, x:x+w]
+​
+​
+# 5. 논리곱과 마스크를 이용해서 관심영역을 복사
+##### 원래 거 and 이진화#####
+foreground = cv2.bitwise_and(logo, logo, mask=fg_mask) # 로고의 전경복사
+#검은색 배경(0) + 형형색색 마스크(220) and 검은색 배경(0) + 흰색 마스크(255)
+# = 검은색 배경(0) + 형형색색 마스크(220)
+# 뒷배경, mask= 앞배경
+​
+background = cv2.bitwise_and(roi, roi, mask= bg_mask) # 원본배경만 복사
+# 일부 뒷배경(220) + 검은색 마스크(0) and 흰색배경(255) + 검은색 마스크(0)
+# = 일부 뒷배경(220) + 검은색 마스크(0)
+​
+# 6. 합성
+res = cv2.add(background, foreground)
+# 일부 뒷배경(220) + 검은색마스크(0) + 검은색 배경(0) + 형형색색 마스크(220)
+#  = 뒷배경 일부(220) + 형형색색 마스크(220)
+​
+# 7. 합성 영상을 원본에 복사
+image[y:y+h, x:x+w] = res
+# 뒷배경 일부(220) <= 뒷배경 일부(220) + 형형색색 마스크(220)
+​
+#cv2.imshow("img_not", fg_mask)
+cv2.imshow("foreground", foreground)
+cv2.imshow("background", background)
+cv2.imshow("res", res)
+cv2.imshow("image", image)
+​
+​
+cv2.waitKey(0)
+cv2.destroyAllWindows() # 객체 소멸
+   ​
