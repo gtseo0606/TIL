@@ -1,0 +1,40 @@
+opencv 사각형의 빗변, 각도로 극좌표, 직교 좌표 구하기 
+​
+#5. 기타 동등 연산 메소드좌표,계산 메소드
+#https://deep-learning-study.tistory.com/206
+​
+#크기계산 magnitude(x, y[, magnitude]) -> magnitude(i) = sqrt{x(i)**2+ y(i)**2}
+# 2차원 배열의 크기
+​
+#각도(방향) 계산: phase(x, y[, angle[, angle[, angleInDegrees]]]) -> angle : 2차원 배열의 회전 각도
+# angle(i) = atan2(y(i), x(i))*180 / 3.14
+# angle : 각도들의 출력 배열
+# angleInDegrees : True(degree)/ False(radian)
+​
+#극좌표로 변환 : cartToPolar(x,y[,magnitude[, angle[, angleInDegrees]]]) -> magnitude, angle
+#  : 2차원 배열들의 크기와 각도를 계산하는 함수
+#직교좌표로 변환 : polarToCar(magnitudem angle[, x[, y[, angleInDegrees]]]) -> x,y
+#  : 각도와 크기를 2차원 배열의 좌표로 계산하는 함수
+​
+import cv2
+import numpy as np
+​
+x = np.array([1,2,3,2,10], np.float32)
+y = np.array([2,3,4,2,9]).astype("float32")
+​
+mag = cv2.magnitude(x,y) #크기를 계산
+ang = cv2.phase(x,y)
+​
+p_mag, p_ang = cv2.cartToPolar(x,y) #직교좌표로 극좌표를 계산
+x2, y2 = cv2.polarToCart(p_mag, p_ang) #극좌표로 직교좌표를 계산
+​
+print(p_mag)
+print(x2)
+​
+print("[x] : %s 요소 : %s" %(x.shape, x))
+print("[y] : %s 요소 : %s" %(y.shape, y))
+​
+print("[mag] : %s 요소 : %s" %(mag.shape, mag))
+print("[ang] : %s 요소 : %s" %(ang.shape, ang))
+​
+​​
