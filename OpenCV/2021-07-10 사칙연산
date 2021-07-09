@@ -1,0 +1,29 @@
+opencv 넘파이 사칙연산
+​
+# 사칙연산
+​
+import cv2
+import numpy as np
+​
+su01 = np.full((3,6), 10, np.uint8)
+su02 = np.full((3,6), 50, np.uint8)
+​
+my_mask = np.zeros(su01.shape, np.uint8)
+my_mask[:, 3:]= 1
+my_mask
+​
+# +
+my_add01 = cv2.add(su01, su02) # 행렬의 합
+my_add02 = cv2.add(su01, su02, mask =my_mask) # 관심영역만 합한다
+​
+# /
+my_div01 = cv2.divide(su01, su02)
+su01 = su01.astype(np.float32)
+su02 = np.float32(su02)
+my_div02 = cv2.divide(su01, su02)
+​
+titles = ['su01', 'su02', 'my_mask', 'my_add01', 'my_add02', 'my_div01', 'my_div02']
+for title in titles:
+   print("[%s] = \n%s \n" % (title, eval(title)))
+​​
+​
