@@ -1,0 +1,25 @@
+opencv 이미지 상태 변환
+​
+# 1. 이미지 처리 - 상하, 좌우, 상하좌우 뒤집기, 반복, 행렬변환(전치)
+​
+import cv2
+image = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\Lenna.png')
+if image is None:
+   raise Exception("파일오류") #예외처리
+​
+x_flip = cv2.flip(image, 0) #x축을 기준으로 상하 뒤집기
+y_flip = cv2.flip(image, 1) #y축을 기준으로 좌우 뒤집기
+xy_flip= cv2.flip(image, -1)
+​
+r_img = cv2.repeat(image,1,2) # 반복복사(한 화면에 두개의 이미지)
+​
+t_img = cv2.transpose(image) # 행렬전치
+​
+titles = ['x','y','xy','r','t']
+img_list = [x_flip, y_flip, xy_flip, r_img, t_img]
+for w_title, img in zip(titles, img_list):
+   cv2.imshow(w_title, img)
+   
+cv2.waitKey(0)
+cv2.destroyAllWindows() # 객체 소멸
+​​
