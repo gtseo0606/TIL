@@ -1,0 +1,21 @@
+opencv 뽀샵 (경계선을 유지하고 나머지는 흐리게)
+​
+​
+# bilateral : 경계선을 유지하면서 뽀샵효과, Gaussian Blur처리 함
+#bilateralFilter(scr, d, sigmaColor, sigmaSpace[, dst[, borderType]])-> dst
+#비선형 필터를 구현할 때 사용, 밝기 변화가 심한 부분은 남겨두고 휘도변화만 원만하게 만들어준다.
+# dst 출력 이미지
+​
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+img = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\sa.png')
+​
+blur = cv2.bilateralFilter(img, 20, 256, 10)
+# d - filtering시 고려할 주변 pixel 지름
+# sigmaColor – Color를 고려할 공간. 숫자가 크면 멀리 있는 색도 고려함.(많은 색)
+# sigmaSpace – 숫자가 크면 멀리 있는 pixel도 고려함.
+​
+plt.subplot(121),plt.imshow(img),plt.title('Original')
+plt.subplot(122),plt.imshow(blur),plt.title('Bilateral')
+​​
