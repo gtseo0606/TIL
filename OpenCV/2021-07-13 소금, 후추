@@ -1,0 +1,13 @@
+opencv 소금, 후추 흐리게
+​
+# cv2.medianBlur(scr, ksize[, dst])
+# 소금 후추를 흐리게(가장 밝은 곳을 흐리게)
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+​
+img = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\logo2.png')
+blur = cv2.medianBlur(img, 9)
+​
+plt.subplot(121),plt.imshow(img),plt.title('Original')
+plt.subplot(122),plt.imshow(blur),plt.title('medianBlurred')​
