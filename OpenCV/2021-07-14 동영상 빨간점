@@ -1,0 +1,27 @@
+opencv 동영상에 빨간점
+​
+# 동영상에 keypoint(빨간점) 적용하기
+​
+import cv2
+cap = cv2.VideoCapture("C:\\Users\\Playdata\\Downloads\\myImg\\0101.MP4")
+# 주소값 반환
+while(True):    
+   bw, img = cap.read() #True, 행렬 반환 # cv2.VideoCpature(주소).read() = cv2.imread(주소)
+   #print(bw)
+   orb = cv2.ORB_create()
+   
+   # find the keypoints with ORB
+   kp = orb.detect(img,None)
+   
+   # compute the descriptors with ORB
+   kp, des = orb.compute(img, kp) # des 행렬
+​
+   # draw only keypoints location,not size and orientation
+   img2 = cv2.drawKeypoints(img, kp, None, color=(0,0,255), flags=0)
+   cv2.imshow("ORB-SLAM", img2)
+   
+   if cv2.waitKey(1)==13:
+       break
+​
+cap.release() #비디오 닫기
+cv2.destroyAllWindows() #윈도우 닫기​
