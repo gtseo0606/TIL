@@ -1,0 +1,21 @@
+opencv 그림에 사용된 색상(RGB)을 히스토그램으로 알아보자
+​
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+​
+#img = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\Lenna.png')
+img = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\pjh5.jpg')
+​
+print('이미지 크기 :', img.shape)
+res = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) #rgb로 하자
+color = ('b', 'g', 'r')
+​
+# 히스토그램을 그렸을 때, 0에 가까울수록 짙은 r,g,b 255에 가까울수록 옅은 r,g,b
+for i, col in enumerate(color):
+   hist_values = cv2.calcHist([res], channels= [i], mask=None, histSize=[256], ranges=[0,256])
+   plt.plot(hist_values, color = col)
+   plt.xlim([0,256])
+​
+plt.title('my_lmg')
+​​
