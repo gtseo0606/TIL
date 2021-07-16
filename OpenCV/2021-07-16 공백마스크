@@ -1,0 +1,21 @@
+opencv 이미지에 공백마스크 생성
+​
+#9-3 이미지, 영상의 3색을 계산해서 mask 그래프로 확인
+​
+import numpy as np
+import cv2
+import matplotlib.pyplot as plt
+​
+#img = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\Lenna.png')
+img = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\pjh5.jpg')
+​
+print('이미지 크기 :', img.shape)
+res= cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+color =('b', 'g', 'r')
+​
+mask = np.zeros(img.shape[:2], np.uint8)
+mask[300:400, 100:400] = 255
+​
+# 마스크도 확인하자
+plt.imshow(mask, cmap = 'gray')
+​​
