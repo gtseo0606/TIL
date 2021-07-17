@@ -1,0 +1,14 @@
+opencv 수축
+​
+# 수축(밝은 색이 수축)
+import cv2
+import numpy as np
+from matplotlib import pyplot as plt
+​
+img = cv2.imread('C:\\Users\\Playdata\\Downloads\\myImg\\eye.jpg')
+#5*5
+kernel = np.ones((5,5), np.uint8)
+erosion = cv2.erode(img, kernel, iterations = 1)
+​
+plt.subplot(121),plt.imshow(img),plt.title('Original')
+plt.subplot(122),plt.imshow(erosion),plt.title('Erosion')​
