@@ -4,6 +4,7 @@
 
 # Python
  * 알고리즘
+ * OpenCV
 
 # Android(Java)
  * [App] Java 기반 Android 9.0(pie) APP 개발 기본
