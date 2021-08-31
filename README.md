@@ -1,6 +1,16 @@
-# R & Python Learned
-## R : 데이터 전처리, 데이터 분석, ...
-## Python : 알고리즘
+# R 
+ * 데이터 전처리
+ * 데이터 분석
+
+# Python
+ * 알고리즘
+
+# Android(Java)
+ * [App] Java 기반 Android 9.0(pie) APP 개발 기본
+ * [App] Java 기반 Android 9.0(pie) APP 개발 심화
+ * [App] Java 기반 Android 9.0(pie) APP 개발 고급
+
+
 
 ### velog에선 훨씬 예쁘게 볼 수 있습니다.
 ### 벨로그 주소 : https://velog.io/@9566 
