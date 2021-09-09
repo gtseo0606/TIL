@@ -1,22 +1,22 @@
 # Support Vector Machine(SVM)
-## e1071 ÆĞÅ°Áö
+## e1071 íŒ¨í‚¤ì§€
 
 tune.svm(data.Y~., data=data, gamma = 10^(-6:-1), cost = 10^(1:2)) 
-# best parameters¸¦ Á¦°ø
-# gamma = ÃÊÆò¸éÀÇ ±â¿ï±â, cost = °úÀûÇÕÀ» ¸·´Â Á¤µµ, default=1
+# best parametersë¥¼ ì œê³µ
+# gamma = ì´ˆí‰ë©´ì˜ ê¸°ìš¸ê¸°, cost = ê³¼ì í•©ì„ ë§‰ëŠ” ì •ë„, default=1
 
 svm.model <- svm(data.Y~., data=data, kenel = "radial", gamma = 0.01, cost = 10)
-# kernel = radial, linear, polynomial, sigmoid Á¤È®µµ¿¡ Å«¿µÇâÀ» ÁÖÁø ¾ÊÀ½
+# kernel = radial, linear, polynomial, sigmoid ì •í™•ë„ì— í°ì˜í–¥ì„ ì£¼ì§„ ì•ŠìŒ
 
 summary(svm.model) 
-# Number of Support Vector(ÀüÃ¼ Áß ³ª´²Áø °³¼ö), Number of Classes(Å¬·¯½ºÅÍ ¼ö)
+# Number of Support Vector(ì „ì²´ ì¤‘ ë‚˜ëˆ ì§„ ê°œìˆ˜), Number of Classes(í´ëŸ¬ìŠ¤í„° ìˆ˜)
 
-## caret ÆĞÅ°Áö
+## caret íŒ¨í‚¤ì§€
 pre <- predict(svm.model, test[,-1], type="class")
 confusionMatrix(data=pre, reference=test[,1], positive='1') 
-# Á¤ºĞ·ùÀ²(Accuracy), ¹Î°¨µµ(Sensitivity), Æ¯ÀÌµµ(Specificity)
+# ì •ë¶„ë¥˜ìœ¨(Accuracy), ë¯¼ê°ë„(Sensitivity), íŠ¹ì´ë„(Specificity)
 
-## ROCR ÆĞÅ°Áö
+## ROCR íŒ¨í‚¤ì§€
 pre.roc <- prediction(as.numeric(pre), as.numeric(test[,1]))
 plot(performance(pre.roc, "tpr", "fpr"))
 abline(a=0, b=1, lty=2, col="black")
