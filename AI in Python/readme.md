@@ -1,2 +1,6 @@
+* [AI 초급] CNN, RNN
 * [AI 중급] 모델 구현과 분석
-  + Hyperparameter Tuning	
+* [AI 중급] 모델 학습과 평가
+* [AI 고급] 모델 학습 심화
+* [AI 고급] 모델 배포 준비
+* [AI 고급] 서비스 배포
