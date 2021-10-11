@@ -6,6 +6,7 @@
  * 알고리즘
  * OpenCV
  * AI
+ * 데이터 분석
 
 # Android(Java)
  * [App] Java 기반 Android 9.0(pie) APP 개발 기본
