@@ -5,7 +5,7 @@
 # Python
  * 알고리즘
  * OpenCV
- * AI
+ * AI(ML/DL)
  * 데이터 분석
 
 # Android(Java)
