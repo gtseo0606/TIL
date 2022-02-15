@@ -7,6 +7,7 @@ Porto Seguro’s Safe Driver Prediction
 ## 오답노트
 
 ![2nd 오답노트](https://user-images.githubusercontent.com/74644453/153811948-a4668631-d54d-481b-84d2-08d50be49d84.png)
+![image](https://user-images.githubusercontent.com/74644453/153998851-81155ac7-bd8c-44a1-884a-07efd81f827d.png)
 
 ## 데이터 분석
 1. 빨리 확인 -> head(), .shape
