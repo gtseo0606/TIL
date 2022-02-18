@@ -4,7 +4,8 @@
 
 
 ## 데이터 분석
-1. EDA
+
+### 1. EDA
  
 ##### 1-1) 타겟변수 : value_counts(), astype(int).plot.hist()
 ##### 1-2) 결측치 : 
@@ -20,7 +21,7 @@ sns.barplot(ax, array, list)
 sns.heatmap(series.corr(), cmap=diverging_palette(), annot=True, center=0, square=True)
 sns.pairplot(dataframe, hue='y', palette = 'Set1', diag_kind='kde')
 
-2. Feature Engineering = feature 구성(feature추가) + feature선택(중요feature선택/차원감소)
+### 2. Feature Engineering = feature 구성(feature추가) + feature선택(중요feature선택/차원감소)
 
 ##### 2-1) Polynomial Features (feature추가) : PolynomialFeatures(degree=3), .corr()
 ##### 2-2) Domain Knowledge Features (feature추가) : feature1/feature2
