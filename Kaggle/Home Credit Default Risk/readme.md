@@ -6,9 +6,9 @@
 ## 데이터 분석
 1. EDA
  
-1-1) 타겟변수 : value_counts(), astype(int).plot.hist(), 
-1-2) 결측치 : 
-1-3) 컬럼 타입 : .dtypes.value_counts()
+##### 1-1) 타겟변수 : value_counts(), astype(int).plot.hist()
+##### 1-2) 결측치 : 
+##### 1-3) 컬럼 타입 : .dtypes.value_counts()
 1-4) 범주형 변수 : get_dummies(), LabelEncoder()
 1-5) 이상치 : SimpleImputer()
 1-6) 상관관계 : .corr()['target'].sort_values()
