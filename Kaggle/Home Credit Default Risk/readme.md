@@ -1,7 +1,11 @@
 ## 데이터
 
 ![화면 캡처 2022-02-13 210226](https://user-images.githubusercontent.com/74644453/153752157-37c450e5-29ec-4810-b203-d1ba889b1e56.png)
-
+![image](https://user-images.githubusercontent.com/74644453/154936038-73c25423-09e1-4598-ad23-e4062c9fafe1.png)
+- application_train -> 8 1+2+7 group=SK_ID_CURR 9 missing_value 삭제
+- bureau -> 1cat, 2num group=SK_ID_BUREAU, 
+- bureau_balance ->3cat, 4num group=SK_ID_BUREAU, 5cat+num outer,  7group = SK_ID_CURR
+- bureau + bureau_balance -> 6bureau[['SK_ID_BUREAU', 'SK_ID_CURR']] + bureau_by_loan
 
 ## 데이터 분석
 
@@ -32,7 +36,4 @@ groupby('x2').agg(['count', 'mean', 'max', 'min', 'sum']).reset_index(), .level[
 ##### 2-5) 범주형 변수 : df.select_dtypes('object'), pd.get_dummies(), groupby().agg(['sum', 'mean']), 
 ##### 2-6) (feature선택) :  (결측치가 많다) , (서로 상관관계가 높다)
 
-application_train -> 8 1+2+7 group=SK_ID_CURR 9 missing_value 삭제
-bureau -> 1cat, 2num group=SK_ID_BUREAU, 
-bureau_balance ->3cat, 4num group=SK_ID_BUREAU, 5cat+num outer,  7group = SK_ID_CURR
-bureau + bureau_balance -> 6bureau[['SK_ID_BUREAU', 'SK_ID_CURR']] + bureau_by_loan
+
