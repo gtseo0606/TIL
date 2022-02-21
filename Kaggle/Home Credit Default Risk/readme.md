@@ -1,7 +1,7 @@
 ## 데이터
 
 ![화면 캡처 2022-02-13 210226](https://user-images.githubusercontent.com/74644453/153752157-37c450e5-29ec-4810-b203-d1ba889b1e56.png)
-![image](https://user-images.githubusercontent.com/74644453/154936038-73c25423-09e1-4598-ad23-e4062c9fafe1.png)
+![Home Credit Default Risk](https://user-images.githubusercontent.com/74644453/154936287-0b667684-b8a2-42ed-a640-6edd6c3d8691.png)
 - application_train -> 8 1+2+7 group=SK_ID_CURR 9 missing_value 삭제
 - bureau -> 1cat, 2num group=SK_ID_BUREAU, 
 - bureau_balance ->3cat, 4num group=SK_ID_BUREAU, 5cat+num outer,  7group = SK_ID_CURR
