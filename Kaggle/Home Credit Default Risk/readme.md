@@ -1,7 +1,11 @@
 ## 데이터
 
 ![화면 캡처 2022-02-13 210226](https://user-images.githubusercontent.com/74644453/153752157-37c450e5-29ec-4810-b203-d1ba889b1e56.png)
+
+## 데이터 전처리
+
 ![Home Credit Default Risk](https://user-images.githubusercontent.com/74644453/154936287-0b667684-b8a2-42ed-a640-6edd6c3d8691.png)
+
 - application_train -> 8 1+2+7 group=SK_ID_CURR 9 missing_value 삭제
 - bureau -> 1cat, 2num group=SK_ID_BUREAU, 
 - bureau_balance ->3cat, 4num group=SK_ID_BUREAU, 5cat+num outer,  7group = SK_ID_CURR
@@ -18,12 +22,12 @@
 ##### 1-5) 이상치 : SimpleImputer()
 ##### 1-6) 상관관계 : .corr()['target'].sort_values()
 ##### 1-7) pairplot
-plt.hist(series, edgecolor='k', bins=25)
-sns.kdeplot(series, bw_method=0.5, label='target=1')
-plt.bar(series/str, series/str)
-sns.barplot(ax, array, list)
-sns.heatmap(series.corr(), cmap=diverging_palette(), annot=True, center=0, square=True)
-sns.pairplot(dataframe, hue='y', palette = 'Set1', diag_kind='kde')
+- plt.hist(series, edgecolor='k', bins=25)
+- sns.kdeplot(series, bw_method=0.5, label='target=1')
+- plt.bar(series/str, series/str)
+- sns.barplot(ax, array, list)
+- sns.heatmap(series.corr(), cmap=diverging_palette(), annot=True, center=0, square=True)
+- sns.pairplot(dataframe, hue='y', palette = 'Set1', diag_kind='kde')
 
 ### 2. Feature Engineering = feature 구성(feature추가) + feature선택(중요feature선택/차원감소)
 
