@@ -4,5 +4,10 @@
 
 ## 데이터 전처리
 
+feature selection 
+3250feats -> 532 feats 
+
+
+
 ## 데이터 분석
 
