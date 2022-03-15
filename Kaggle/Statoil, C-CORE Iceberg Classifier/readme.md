@@ -12,7 +12,7 @@
 ![image](https://user-images.githubusercontent.com/74644453/158306783-fb2fa692-dd2f-4245-ab44-2d6714c2f6f0.png)
 
 
- - iplot 
+ - iplot </br>
 외부 서버에 연결하지 않고 주피터 노트북 내부에 plotly 그래프를 그려줍니다. 노트북 내부에 그래프를 그리면 데이터 분석 과정을 한 곳에 유지할 수 있다는 장점이 있습니다. 표시된 그래프 위에 마우스를 놓으면 각각의 값을 확인하고 그래프를 확대하는 등의 인터렉티브 동작을 할 수 있습니다.
 
 - Sequance().predict(X_test) 가능</br>
