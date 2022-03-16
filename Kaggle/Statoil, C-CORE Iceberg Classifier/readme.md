@@ -2,6 +2,10 @@
 
 ![image](https://user-images.githubusercontent.com/74644453/158055602-a2760ae7-a956-4989-9db6-83b81770e2f0.png)
 
+## 데이터 분석
+![statoil](https://user-images.githubusercontent.com/74644453/158542590-f9daeeb9-811a-4a29-9996-da3336431504.png)
+
+
 ## Study
 
 ### 3/14
