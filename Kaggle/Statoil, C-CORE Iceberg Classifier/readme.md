@@ -3,7 +3,8 @@
 ![image](https://user-images.githubusercontent.com/74644453/158055602-a2760ae7-a956-4989-9db6-83b81770e2f0.png)
 
 ## 데이터 분석
-![statoil](https://user-images.githubusercontent.com/74644453/158542590-f9daeeb9-811a-4a29-9996-da3336431504.png)
+![statoil](https://user-images.githubusercontent.com/74644453/158808288-1900a7bb-6d90-4ee7-819d-83043c08f82e.png)
+
 
 
 ## Study
@@ -27,3 +28,17 @@ Sequance().predict_proba(X_test) 불가능 이유
 ![image](https://user-images.githubusercontent.com/74644453/158306453-bc1cdff2-1b65-49e3-8bfb-b0945ed6f4bf.png)
 
 
+### 3/17
+
+ImageDataGenerator() # 이미지 증강
+ImageDataGenerator.flow(train, y_train, batch_size=32) # 배치사이즈 만큼 데이터증강
+
+
+1. get_model_notebook
+2. combined_model
+3. gen_flow_multi_inputs -> ImageDataGenerator.flow(batch_size)
+4. train_model -> ImageDataGenerator.fit_generator()
+5. gen_model_weights -> get_model_notebook + train_model
+
+6. rain_models -> train_test_split + gen_model_weights 
+                      + combined_model + fit_generator(gen_flow_multi_inputs) 
