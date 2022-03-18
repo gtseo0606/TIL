@@ -4,4 +4,7 @@
 
 - Costa Rican Household Poverty Level Prediction(2022-02-21 ~ 2022-03-13)
 
-- Statoil / C-CORE Iceberg Classifier Challenge(2022-03-14 ~ 2022-03-)
+- Statoil / C-CORE Iceberg Classifier Challenge(2022-03-14 ~ 2022-03-18)
+
+- TensorFlow Speech Recognition Challenge(2022-03-19 ~ 2022-03-)
+
