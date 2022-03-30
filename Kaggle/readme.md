@@ -6,5 +6,5 @@
 
 - Statoil / C-CORE Iceberg Classifier Challenge(2022-03-14 ~ 2022-03-18)
 
-- TensorFlow Speech Recognition Challenge(2022-03-19 ~ 2022-03-)
+- TensorFlow Speech Recognition Challenge(2022-03-19 ~ 2022-03-29)
 
