@@ -8,7 +8,7 @@
 
 - TensorFlow Speech Recognition Challenge(2022-03-19 ~ 2022-03-29)
 
-- 정리(2022-03-30 ~ 2022-)
+- 정리(2022-03-30 ~ 2022-04)
 
 - New York City Taxi Trip Duration(2022-04-01 ~ 2022)
 
