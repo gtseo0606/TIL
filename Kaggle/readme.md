@@ -10,5 +10,5 @@
 
 - 정리(2022-03-30 ~ 2022-04-0)
 
-- New York City Taxi Trip Duration(2022-04- ~ 2022)
+- New York City Taxi Trip Duration(2022-04- ~ 2022-04)
 
