@@ -1,2 +1,2 @@
 dd
-![statoil](https://user-images.githubusercontent.com/74644453/163710270-08bc7904-987e-44a3-9e62-f385119c8780.png)
+![statoil](https://user-images.githubusercontent.com/74644453/163803127-620104d8-2c2e-4cb7-9c18-0d13796c2a46.png)
