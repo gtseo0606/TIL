@@ -4,7 +4,7 @@
 
 ## 데이터 분석
 ![statoil](https://user-images.githubusercontent.com/74644453/158808288-1900a7bb-6d90-4ee7-819d-83043c08f82e.png)
-![statoil](https://user-images.githubusercontent.com/74644453/158976724-cc63b1e9-46d9-498f-8169-de5fca401ea0.png)
+![statoil](https://user-images.githubusercontent.com/74644453/163940619-16b4829b-0ecf-47c6-8ebc-c486b0dcea66.png)
 
 
 
