@@ -17,7 +17,7 @@ combined_model.evaluate()
 
 
 ### [Kaggle] TensorFlow Speech Recognition Challenge
-- 오디오 모델링
+- 오디오 모델링<br/>
 wavefile.read('')->signal.spectrogram()-> librosa.load('') -> librosa.feature.melspectrogram -> ipd.Audio(samples[4000:13000], rate=sample_rate) # 침묵제거
 -> fft -> signal.resample() -> ipd.Audio(resampled, rate = sample_rate) # 차원축소 -> pca
 
