@@ -25,5 +25,4 @@ wavefile.read('')->signal.spectrogram()-> librosa.load('') -> librosa.feature.me
 -> fft -> signal.resample() -> ipd.Audio(resampled, rate = sample_rate) # 차원축소 -> pca
 <br/>
 
-
-![오디오 모델링](https://user-images.githubusercontent.com/74644453/164616378-e3222abb-9aa8-4c11-aa3b-38345d2315d0.png)
+![오디오 모델링](https://user-images.githubusercontent.com/74644453/164616543-3c9ff769-93ad-42a7-91ff-819b88d7c6d9.png)
