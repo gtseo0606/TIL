@@ -23,5 +23,7 @@ combined_model.evaluate()<br/>
 #### 오디오 모델링<br/>
 wavefile.read('')->signal.spectrogram()-> librosa.load('') -> librosa.feature.melspectrogram -> ipd.Audio(samples[4000:13000], rate=sample_rate) # 침묵제거
 -> fft -> signal.resample() -> ipd.Audio(resampled, rate = sample_rate) # 차원축소 -> pca
+<br/>
 
 
+![오디오 모델링](https://user-images.githubusercontent.com/74644453/164616378-e3222abb-9aa8-4c11-aa3b-38345d2315d0.png)
