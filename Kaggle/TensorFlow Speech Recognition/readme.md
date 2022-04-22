@@ -20,6 +20,18 @@
 ## Output
 
 ![image](https://user-images.githubusercontent.com/74644453/159149340-7ecf5c62-9088-4e75-bf8c-80f0ed7c9d98.png)
-
+<br/>
 ![image](https://user-images.githubusercontent.com/74644453/159149330-d8b2403a-656d-4307-b1f2-852575e0f449.png)
+<br/>
+
+#### 오디오 모델링
+<br/>
+
+wavefile.read('')->signal.spectrogram()-> librosa.load('') -> librosa.feature.melspectrogram -> ipd.Audio(samples[4000:13000], rate=sample_rate) # 침묵제거
+-> fft -> signal.resample() -> ipd.Audio(resampled, rate = sample_rate) # 차원축소 -> pca -> np.pad+.resample+.log_spectrogram -> model.predict(앞에것)
+<br/>
+
+![오디오 모델링](https://user-images.githubusercontent.com/74644453/164616685-e070d4ae-e219-436e-b5eb-1e27ca3bf851.png)
+<br/>
+
 
