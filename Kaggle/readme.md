@@ -12,6 +12,7 @@
 
 - New York City Taxi Trip Duration(2022-04-26 ~ 2022-04-28)
 
-- Zillow’s Home Value Prediction(2022-04-28 ~ 2022-05-)
+- Zillow’s Home Value Prediction(2022-04-28 ~ 2022-05-01)
 
-- 
+- 2018 Data Science Bowl(2022-05-02 ~ 2022-05-)
+
