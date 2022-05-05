@@ -14,5 +14,5 @@
 
 - Zillow’s Home Value Prediction(2022-04-28 ~ 2022-05-01)
 
-- 2018 Data Science Bowl(2022-05-02 ~ 2022-05-)
+- 2018 Data Science Bowl(2022-05-02 ~ 2022-05-06)
 
