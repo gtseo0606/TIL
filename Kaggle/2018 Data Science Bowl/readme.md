@@ -1,11 +1,15 @@
-### 분석
+# 이미지 모델링
+0. ii-re-r/g/d/o-m/r-nl/c-fobo/t
+1. msvc-rgdrct-ibscmdbfimdadmidmcal-fgidgf
+2. (imageio.imread(str(im_path)))iiromnlfobo*
+3. (from skimage.io import imread) iisumstackexpand-sbc-dice-mask-rle
 
-
+# 요약2
 
 색상변환(rgb->gray)->배경제거=마스크화(0이 검정 1이 흰색)->라벨부여+컬러맵->셀크기(픽셀)10이하제거->겹쳐잇는 객체 분리(ndimage.binary_opening)
 -> RLE 인코딩
 
-# 요약
+# 요약3
 
 ### 1. label 읽어오기 
 ### 2. 이미지경로검색/분리(path  -> ImageId, ImageType, TrainingSplit, Stage)
@@ -18,3 +22,4 @@
 ### 9. test의 img+모델로 mask 예측 # test_img_df['masks'] = test_img_df['images'].map(lambda x: simple_cnn.predict(np.expand_dims(x, 0))[0, :, :, 0]))
 ### 10. .imshow()
 ### 11. rle 인코딩 #mask로 rle변수를 만듦
+
