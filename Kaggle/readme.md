@@ -16,5 +16,5 @@
 
 - 2018 Data Science Bowl(2022-05-02 ~ 2022-05-07)
 
-- Spooky Author Identification(2022-05-08 ~ 2022-05-)
+- Spooky Author Identification(2022-05-08 ~ 2022-05-1)
 
