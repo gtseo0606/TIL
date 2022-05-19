@@ -19,21 +19,41 @@ sum(-0.1/1958*{(log*예측한값)*실제값})
 
 
 ## 요약 정리
-0-1) 전처리->희소행렬->(전처리)->모델링->점수
-tokenize() -> stopwords.words() -> stemmer() ->희소행렬 CountVectorizer()/LemmaCountVectorizer()/TfidfVectorizer() -> 모델 LatentDirichletAllocationlda.fit()/로지스틱회귀/MultinomialNB -> 로그손실률 -> GridSearchCV -> 로그손실률
-                                                                                                                                                          -> 전처리 decomposition.TruncatedSVD(n_components=120).fit_transform(문장) + StandardScaler().fit_transform(문장) -> 모델 SVC/xgb.XGBClassifier/딥러닝 -> 로그손실률 -> GridSearchCV -> 로그손실률
+1) 전처리->희소행렬->(전처리)->모델링->점수
+1. tokenize()
+2. stopwords.words()
+3. stemmer() 
+4. 희소행렬 CountVectorizer()/LemmaCountVectorizer()/TfidfVectorizer() 
+5. 모델 LatentDirichletAllocationlda.fit()/로지스틱회귀/MultinomialNB
+6. 전처리 decomposition.TruncatedSVD(n_components=120).fit_transform(문장) + StandardScaler().fit_transform(문장)
+7. 모델 SVC/xgb.XGBClassifier/딥러닝
+8. 로그손실률
+9. GridSearchCV
+10. 로그손실률
  
-0-2) 딕셔너리화->밀집행렬->전처리->모델링(LSTM/GRU)->점수
-문장 밀집표현화 Glove 딕셔너리화 -> xtrain문장->전처리-> text.Tokenizer() -> token.fit_on_texts() -> token.texts_to_sequences(xtrain) (단어 -> 숫자 시퀀스) -> .pad_sequences(xtrain_seq, maxlen=70) (0패딩) -> s-esdlstm/gru-dd-dd-da -> Bidirectional(LSTM) ->
+2) 딕셔너리화->밀집행렬->전처리->모델링(LSTM/GRU)->점수
+1. 문장 밀집표현화 Glove 딕셔너리화 
+2. xtrain문장
+3. 전처리 text.Tokenizer() 
+4. token.fit_on_texts() 
+5. token.texts_to_sequences(xtrain) (단어 -> 숫자 시퀀스)
+6. .pad_sequences(xtrain_seq, maxlen=70) (0패딩) 
+7. s-esdlstm/gru-dd-dd-da
+8. Bidirectional(LSTM)
+9. 로그손실률
+10. GridSearchCV
+11. 로그손실률
 
 
 
 ## 요약1
-
-token(분리)화(nltk.word_tokenize()) ->불용어 제거(nltk.corpus.stopwords.words('english')) -> 형태소분석=기본단어화=stemming(nltk.stem.PorterStemmer()/lancaster/snowball.stem("running"))
--> WordNetLemmatizer().lemmatize("leaves") -> 희소행렬화(컴퓨터언어화) Bag of Words(CountVectorizer(min_df=0).fit_transform(sentence).toarray())
--> 주제단어 가중치화 LatentDirichletAllocationlda.fit(tf) + components_ # tf=희소행렬CountVectorizer + WordNetLemmatizer() + .fit_transform(text) + np.asarray(tf.sum(axis=0)).ravel() + tf.get_feature_names()
--> WordCloud
+1. token(분리)화(nltk.word_tokenize())
+2. 불용어 제거(nltk.corpus.stopwords.words('english')) 
+3. 형태소분석=기본단어화=stemming(nltk.stem.PorterStemmer()/lancaster/snowball.stem("running"))
+4. WordNetLemmatizer().lemmatize("leaves") 
+5. 희소행렬화(컴퓨터언어화) Bag of Words(CountVectorizer(min_df=0).fit_transform(sentence).toarray())
+6. 주제단어 가중치화 LatentDirichletAllocationlda.fit(tf) + components_ # tf=희소행렬CountVectorizer + WordNetLemmatizer() + .fit_transform(text) + np.asarray(tf.sum(axis=0)).ravel() + tf.get_feature_names()
+7. WordCloud
 
 ## 요약2
 1. 문장 희소행렬화 TfidfVectorizer().fit_transform(문장) -> 로지스틱회귀/MultinomialNB -> 로그손실률 -> GridSearchCV -> 로그손실률
