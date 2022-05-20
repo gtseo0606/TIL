@@ -72,4 +72,9 @@ text.Tokenizer() -> token.fit_on_texts() -> token.texts_to_sequences(xtrain) (�
 7. 앙상블
 
 ## 요약3
-
+1. 메타변수 생성 -> xgb -> np.mean(metrics.log_loss(실제값, 예측값))
+2. TfidfVectorizer -> MultinomialNB -> confusion_matrix-> np.mean(metrics.log_loss(실제값, 예측값))
+3. TfidfVectorizer -> TruncatedSVD -> np.mean(metrics.log_loss(실제값, 예측값))
+4. CountVectorizer(stop_words='english', ngram_range=(1,3)) -> MultinomialNB -> confusion_matrix -> np.mean(metrics.log_loss(실제값, 예측값))
+5. CountVectorizer(ngram_range=(1,7), analyzer='char')
+6. TfidfVectorizer(ngram_range=(1,5), analyzer='char') -> TruncatedSVD(n_components=n_comp, algorithm='arpack') -> pd.concat([train_df, train_svd], axis=1) -> 앞서한 예측값들 -> xgb -> xgb.plot_importance -> np.mean(metrics.log_loss(실제값, 예측값))
