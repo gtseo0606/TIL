@@ -26,10 +26,12 @@ sum(-0.1/1958*{(log*예측한값)*실제값})
 4. 희소행렬 CountVectorizer()/LemmaCountVectorizer()/TfidfVectorizer() 
 5. 모델 LatentDirichletAllocationlda.fit()/로지스틱회귀/MultinomialNB
 6. 전처리 decomposition.TruncatedSVD(n_components=120).fit_transform(문장) + StandardScaler().fit_transform(문장)
-7. 모델 SVC/xgb.XGBClassifier/딥러닝
-8. 로그손실률
-9. GridSearchCV
-10. 로그손실률
+7. 메타변수 생성 TfidfVectorizer(ngram_range=(1,5), analyzer='char') + TruncatedSVD(n_components=n_comp, algorithm='arpack') -> pd.concat([train_df, train_svd], axis=1)
+8. 모델 SVC/xgb.XGBClassifier/딥러닝
+9. 로그손실률
+10. GridSearchCV
+11. 로그손실률/np.mean(metrics.log_loss(실제값, 예측값))
+12. 혼동행렬
  
 #### 2. 딕셔너리화->밀집행렬->전처리->모델링(LSTM/GRU)->점수
 1. 문장 밀집표현화 Glove 딕셔너리화 
