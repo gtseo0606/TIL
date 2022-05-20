@@ -16,5 +16,8 @@
 
 - 2018 Data Science Bowl(2022-05-02 ~ 2022-05-07)
 
-- Spooky Author Identification(2022-05-08 ~ 2022-05-17)
+- Spooky Author Identification(2022-05-08 ~ 2022-05-20)
+
+- Mercari Price Suggestion Challengeinput(2022-05-21 ~ )
+
 
