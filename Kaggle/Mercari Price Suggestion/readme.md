@@ -1,5 +1,5 @@
 
-![image](https://user-images.githubusercontent.com/74644453/169780332-9d43a1ae-5a9a-471b-9aac-a0719f66e690.png)
+![nlp](https://user-images.githubusercontent.com/74644453/169780456-380cc6c7-9102-4032-96d2-8c9e7df98cc0.png)
 
 ## 요약 1
 
