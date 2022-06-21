@@ -3,12 +3,13 @@
  * 데이터 분석
 
 # Python
+ * Kaggle
+ * Dacon
  * 데이터 전처리
  * 데이터 분석
  * 알고리즘
  * OpenCV
  * AI(ML/DL)
- * Kaggle
  
 # Android(Java)
  * [App] Java 기반 Android 9.0(pie) APP 개발 기본
