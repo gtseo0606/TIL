@@ -1,5 +1,5 @@
 - KBO 타자 OPS 예측(2022-06-21 ~ 2022-06-)
-(회귀/WRMSE/) 
+  + (회귀/WRMSE/) 
  
 - 반도체 박막 두께 분석 경진대회(2022-06-21 ~ 2022-06-24)
 (다중회귀/MAE/Skipconnection MLP with Ensemble(파이토치)/GPU)
