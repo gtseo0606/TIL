@@ -1,0 +1,103 @@
+# 변수 선택(https://datascienceschool.net/03%20machine%20learning/14.03%20%ED%8A%B9%EC%A7%95%20%EC%84%A0%ED%83%9D.html)
+# 1. 분산에 의한 변수선택 
+# 예측모델에서 중요한 데이터란 종속변수와의 상관관계가 크고 예측에 도움이 되는 데이터. 
+# 하지만 상관관계 계산에 앞서 데이터의 값 자체가 표본에 따라 그다지 변하지 않는다면 종속변수 예측에도 도움이 되지않을 가능성이 높다.
+# ex) 종속, 독립데이터는 0,1값. 종속데이터는 0,1이 균형, 독립데이터 대부분(90%)이 0이면 제거
+from sklearn.feature_selection import VarianceThreshold
+selector = VarianceThreshold(1e-5)
+selector.fit_transform(X_train) # (1095, 233)
+X_train = X_train[X_train.columns[selector.get_support(indices=True)]] # 1095 rows × 231 columns
+
+selector.transform(X_test) # (365, 233)
+X_test = X_test[X_test.columns[selector.get_support(indices=True)]] # 365 rows × 231 columns
+X_train
+
+# 2. 단일 변수 선택
+from sklearn.feature_selection import chi2, f_classif, mutual_info_classif, SelectKBest
+# 각각의 독립변수를 하나만 사용한 예측모형의 성능을 이용, 분류성능/상관관계가 높은 변수만 선택
+# selector = SelectKBest(chi2, k='all') # 카이제곱 검정 통계값
+# selector = SelectKBest(f_classif, k='all') # 분산분석(ANOVA) F검정 통계값
+# selector = SelectKBest(mutual_info_classif, k=14330) # 상호정보량(mutual information)
+# selector.fit_transform(X_train, y_train)
+# X_train = X_train[X_train.columns[selector.get_support(indices=True)]] # 1095 rows × 231 columns
+
+# selector.transform(X_test) # (365, 233)
+# X_test = X_test[X_test.columns[selector.get_support(indices=True)]] # 365 rows × 231 columns
+# X_test
+
+# mf = mutual_info_classif(train_float.values, train.target.values, n_neighbors=3, random_state=17) 
+# n_neighbors : 연속 변수에 대한 MI 추정에 사용할 이웃 수
+# [0.01402035 0.00431986 0.0055185  0.00778454 0.00157233 0.00197537 0.01226    0.00553038 0.00545101 0.00562139]
+
+# 3. rf 기반모델 변수 선택
+from sklearn.feature_selection import SelectFromModel
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+# SelectFromModel는 rf.feature_importances_ 기반(>median)
+# model = RandomForestClassifier().fit(train, target)
+# model = ExtraTreesClassifier(n_estimators=50).fit(X_train, y_train)
+# selector = SelectFromModel(model, threshold = 'median', prefit=True, max_features=14330)
+# 지니계수/엔트로피가 임계값(median) 이상만 선택
+
+# X_train_sel = selector.transform(X_train)
+# n_features = selector.transform(X_train).shape[1]
+# train[train.columns[selector.get_support(indices=True)]]
+
+# selected_vars = list(train.columns[sfm.get_support()])
+# train = train[selected_vars + ['target']]
+
+
+# 3. rf 기반모델 변수 선택
+from sklearn.feature_selection import SelectFromModel
+from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+# SelectFromModel는 rf.feature_importances_ 기반(>median)
+#model = RandomForestClassifier().fit(train, target)
+model = ExtraTreesClassifier(n_estimators=50).fit(X_train, y_train)
+selector = SelectFromModel(model, threshold = 'median', prefit=True)
+# 지니계수/엔트로피가 임계값(median) 이상만 선택
+
+X_train = X_train[X_train.columns[selector.get_support(indices=True)]]
+X_train # 1095 rows × 116 columns
+
+X_test = X_test[X_test.columns[selector.get_support(indices=True)]]
+X_test # 365 rows × 116 columns
+
+
+# 4. 후진소거법
+from sklearn.feature_selection import RFECV 
+# selector = RFECV(model, step=1, cv=3, score=scorer); selector.n_features_;
+# selector.fit(train, target); train = selector.transform(train);
+# selected_features = train.columns[np.where(selector.ranking_==1)]
+# train_selected = pd.DataFrame(train_selected, columns = selected_features)
+
+# 5. 부분의존도(변수끼리)
+# (PDP(하나의 변수)는 전역적 (Global) 방법론으로 분류)
+from sklearn.inspection import partial_dependence
+# partial_dependence(estimator, X_train, y_train)
+
+# ex) ‘자동차 연식’과 예측값의 관계
+import matplotlib.pyplot as plt
+from pdpbox import pdp
+pdp_dist = pdp.pdp_isolate(model=model, dataset=X_val, model_features=X_val.columns, feature='Vehicle_Age')
+pdp.pdp_plot(pdp_dist, feature)
+
+# ex) ['운전면허 보유여부’, '자동차 연식’]과 예측값의 관계
+from pdpbox.pdp import pdp_interact, pdp_interact_plot
+interaction = pdp.pdp_isolate(model=model, dataset=X_val, model_features=X_val.columns, feature=['Driving_License', 'Vehicle_Age'])
+pdp_interact_plot(interaction, plot_type='grid', feature_names=['Driving_License', 'Vehicle_Age'])
+
+# 6. SHAP(데이터 간)
+# 개별 관측치(하나의 데이터)에 대한 방법론인 Shap은 지역적(Local) 방법론
+# X_1 = 차 보험에 대해 no(0) 값을 갖는 경우
+import shap
+explainer = shap.TreeExplainer(model) # LGBMClassifier().booster_
+shap_values = explainer.shap_values(X_1) 
+shap.initjs()
+shap.force_plot(explainer.expected_value[0], shap_values=shap_values[0], features=X_1)
+
+# 7. 순열 중요도 (https://hong-yp-ml-records.tistory.com/51)
+# 상관관계가 높은 변수시 유의(https://wooono.tistory.com/328)
+import eli5 #5살도 이해할수있는 함수
+from eli5.sklearn import PermutationImportance
+perm = PermutationImportance(model, scoring = "f1", random_state = 42).fit(X_val, y_val)
+eli5.show_weights(perm, top = 80, feature_names = X_val.columns.tolist())
+
