@@ -29,22 +29,6 @@ from sklearn.feature_selection import chi2, f_classif, mutual_info_classif, Sele
 # n_neighbors : 연속 변수에 대한 MI 추정에 사용할 이웃 수
 # [0.01402035 0.00431986 0.0055185  0.00778454 0.00157233 0.00197537 0.01226    0.00553038 0.00545101 0.00562139]
 
-# 3. rf 기반모델 변수 선택
-from sklearn.feature_selection import SelectFromModel
-from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
-# SelectFromModel는 rf.feature_importances_ 기반(>median)
-# model = RandomForestClassifier().fit(train, target)
-# model = ExtraTreesClassifier(n_estimators=50).fit(X_train, y_train)
-# selector = SelectFromModel(model, threshold = 'median', prefit=True, max_features=14330)
-# 지니계수/엔트로피가 임계값(median) 이상만 선택
-
-# X_train_sel = selector.transform(X_train)
-# n_features = selector.transform(X_train).shape[1]
-# train[train.columns[selector.get_support(indices=True)]]
-
-# selected_vars = list(train.columns[sfm.get_support()])
-# train = train[selected_vars + ['target']]
-
 
 # 3. rf 기반모델 변수 선택
 from sklearn.feature_selection import SelectFromModel
@@ -62,17 +46,42 @@ X_test = X_test[X_test.columns[selector.get_support(indices=True)]]
 X_test # 365 rows × 116 columns
 
 
-# 4. 후진소거법
+## 4. 순환하면서 변수 제거/후진소거법 (https://process-mining.tistory.com/138)
 from sklearn.feature_selection import RFECV 
-# selector = RFECV(model, step=1, cv=3, score=scorer); selector.n_features_;
-# selector.fit(train, target); train = selector.transform(train);
-# selected_features = train.columns[np.where(selector.ranking_==1)]
-# train_selected = pd.DataFrame(train_selected, columns = selected_features)
+from sklearn.tree import DecisionTreeClassifier
+# 변수를 하나씩 제거하면서 교차검증을 통해 더 정확한 성능을 확인
+model = linear_model.LinearRegression()
+selector = RFECV(model, step=1, scoring = 'neg_mean_squared_error') # defalut(cv=5)
+selector.fit(train, target)
+selector.n_features_ # 117
 
-# 5. 부분의존도(변수끼리)
-# (PDP(하나의 변수)는 전역적 (Global) 방법론으로 분류)
+train1 = selector.transform(train)
+selected_features = train.columns[np.where(selector.ranking_==1)]
+train_selected = pd.DataFrame(train1, columns = selected_features)
+train_selected
+
+# 5. 부분의존도(변수간) # https://psystat.tistory.com/138
+# 5-1. 관심 입력변수를 제외한 변수(상수 취급)는 고정, 관심변수값을 변화시키며(변수 취급) 예측값 계산 후, 평균
+# 5-2. 그래프를 그렸을때, 상승,하강이 없으면 유의하며 제거!
+# but 상관관계를 반영하지 않아 상관계수가 높아도 평탄하게 나오는 경우가 많음
+# 5-3. PDP는 전역적 (Global) 방법론으로 분류
 from sklearn.inspection import partial_dependence
-# partial_dependence(estimator, X_train, y_train)
+# 그래프
+# fig, ax = plt.subplots(figsize=(14, 14))
+# plot_partial_dependence(estimator=model, X=train1, 
+#                         features=train1.columns[:10], # [0,1] : 첫번째, 두번째 변수 
+#                         grid_resolution=round(train1.shape[0]*0.1), # (행개수/10)개의 (average, values)값
+#                         percentiles=(0, 1), kind='average', method='brute', ax=ax) 
+# rug는 데이터 밀도가 높을수록 좁은 간격으로 표시, 밀도가 낮을수록 넓은 간격으로 표시
+
+# 값
+# res = partial_dependence(estimator=model, X=X, features=['LSTAT'], # [0,1] : 첫번째, 두번째 변수 
+#                          grid_resolution=round(X.shape[0]*0.1), # (행개수/10)개의 (average, values)값
+# 												 percentiles=(0, 1), kind='average', method='brute')
+
+# print(average) # 편의존성 값
+# print(values) # 최솟값과 최댓값 사이에서 만들어진 그리드 값
+
 
 # ex) ‘자동차 연식’과 예측값의 관계
 import matplotlib.pyplot as plt
@@ -85,19 +94,139 @@ from pdpbox.pdp import pdp_interact, pdp_interact_plot
 interaction = pdp.pdp_isolate(model=model, dataset=X_val, model_features=X_val.columns, feature=['Driving_License', 'Vehicle_Age'])
 pdp_interact_plot(interaction, plot_type='grid', feature_names=['Driving_License', 'Vehicle_Age'])
 
-# 6. SHAP(데이터 간)
+# 6. SHAP(데이터 간) https://todayisbetterthanyesterday.tistory.com/57
 # 개별 관측치(하나의 데이터)에 대한 방법론인 Shap은 지역적(Local) 방법론
 # X_1 = 차 보험에 대해 no(0) 값을 갖는 경우
 import shap
-explainer = shap.TreeExplainer(model) # LGBMClassifier().booster_
-shap_values = explainer.shap_values(X_1) 
-shap.initjs()
-shap.force_plot(explainer.expected_value[0], shap_values=shap_values[0], features=X_1)
+from lightgbm import LGBMRegressor
+
+model = LGBMRegressor().fit(train1, target)
+explainer = shap.TreeExplainer(model)
+shap_values = explainer.shap_values(train1) 
+shap.initjs() # javascript 초기화
+# 첫번째 행을 이용
+shap.force_plot(explainer.expected_value, shap_values=shap_values[0,:], features=train1.iloc[0,:])
+
 
 # 7. 순열 중요도 (https://hong-yp-ml-records.tistory.com/51)
 # 상관관계가 높은 변수시 유의(https://wooono.tistory.com/328)
 import eli5 #5살도 이해할수있는 함수
 from eli5.sklearn import PermutationImportance
-perm = PermutationImportance(model, scoring = "f1", random_state = 42).fit(X_val, y_val)
-eli5.show_weights(perm, top = 80, feature_names = X_val.columns.tolist())
+perm = PermutationImportance(model).fit(train1, target)
+eli5.show_weights(perm, top = 80, feature_names = train1.columns.tolist())
+
+
+# 8. 상관관계, 상관계수
+from sklearn.math import sqrt
+from scipy.stats import spearmanr
+# spr = spearmanr(x, y).correlation # 스피어만 rate
+# pcr = np.corrcoef(x,y)[0,1] # 피어슨 rate
+# spr_p_value = spearmanr(x, y).pvalue
+
+# 9. 전진 선택법https://zephyrus1111.tistory.com/65
+import pandas as pd
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+
+variables = train1.columns.tolist() ## 설명 변수 리스트
+
+selected_variables = [] ## 선택된 변수들
+sl_enter = 0.05
+ 
+sv_per_step = [] ## 각 스텝별로 선택된 변수들
+adjusted_r_squared = [] ## 각 스텝별 수정된 결정계수
+steps = [] ## 스텝
+step = 0
+
+while len(variables) > 0:
+    remainder = list(set(variables) - set(selected_variables))
+    pval = pd.Series(index=remainder) ## 변수의 p-value
+    for col in remainder: 
+        X = sm.add_constant(train[selected_variables+[col]])
+        model = sm.OLS(target, X).fit()
+        pval[col] = model.pvalues[col]
+ 
+    min_pval = pval.min()
+    if min_pval < sl_enter: ## 최소 p-value 값이 기준 값보다 작으면 포함
+        selected_variables.append(pval.idxmin())
+        
+        step += 1
+        steps.append(step)
+        adj_r_squared = sm.OLS(target, sm.add_constant(train[selected_variables])).fit().rsquared_adj
+        adjusted_r_squared.append(adj_r_squared)
+        sv_per_step.append(selected_variables.copy())
+    else:
+        break
+selected_variables
+
+
+# 10. 후진소거법
+variables = train1.columns.tolist() 
+
+selected_variables = variables ## 초기에는 모든 변수가 선택된 상태
+sl_remove = 0.05
+ 
+sv_per_step = [] ## 각 스텝별로 선택된 변수들
+adjusted_r_squared = [] ## 각 스텝별 수정된 결정계수
+steps = [] ## 스텝
+step = 0
+while len(selected_variables) > 0:
+    X = sm.add_constant(train[selected_variables])
+    p_vals = sm.OLS(target, X).fit().pvalues[1:] ## 절편항의 p-value는 뺀다
+    max_pval = p_vals.max() ## 최대 p-value
+    if max_pval >= sl_remove: ## 최대 p-value값이 기준값보다 크거나 같으면 제외
+        remove_variable = p_vals.idxmax()
+        selected_variables.remove(remove_variable)
+ 
+        step += 1
+        steps.append(step)
+        adj_r_squared = sm.OLS(target, sm.add_constant(train[selected_variables])).fit().rsquared_adj
+        adjusted_r_squared.append(adj_r_squared)
+        sv_per_step.append(selected_variables.copy())
+    else:
+        break
+
+selected_variables
+
+
+# 11. 단계별 선택법
+
+sel_variables = [] ## 선택된 변수들
+ 
+sv_per_step = [] ## 각 스텝별로 선택된 변수들
+adjusted_r_squared = [] ## 각 스텝별 수정된 결정계수
+steps = [] ## 스텝
+step = 0
+
+while len(list(train1.columns)) > 0:
+    cols = list(set(list(train1.columns)) - set(sel_variables))
+    pval = pd.Series(index=cols) 
+    for col in cols: 
+        X = sm.add_constant(train[sel_variables+[col]])
+        model = sm.OLS(target, X).fit()
+        pval[col] = model.pvalues[col]
+ 
+    min_pval = pval.min()
+    if min_pval < 0.05 : ## 최소 p-value 값이 기준 값보다 작으면 포함
+        sel_variables.append(pval.idxmin())
+        while len(sel_variables) > 0:
+            sel_X = train[sel_variables]
+            sel_X = sm.add_constant(sel_X)
+            sel_pval = sm.OLS(y,sel_X).fit().pvalues[1:] ## 절편항의 p-value는 뺀다
+            max_pval = selected_pval.max()
+            if max_pval >= 0.05: ## 최대 p-value값이 기준값보다 크거나 같으면 제외
+                remove_variable = selected_pval.idxmax()
+                sel_variables.remove(remove_variable)
+            else:
+                break
+        
+        step += 1
+        steps.append(step)
+        adj_r_squared = sm.OLS(y,sm.add_constant(df[sel_variables])).fit().rsquared_adj
+        adjusted_r_squared.append(adj_r_squared)
+        sv_per_step.append(sel_variables.copy())
+    else:
+        break
+
+selected_variables
 
