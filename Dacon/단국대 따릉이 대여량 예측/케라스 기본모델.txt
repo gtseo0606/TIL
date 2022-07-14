@@ -1,0 +1,64 @@
+# 케라스 딥러닝 오픈소스 
+# 텐서플로우보다 쉽고 직관적. 텐서플로우에서도 케라스 사용가능 
+from keras import initalizers # Keras 레이어의 초기 임의 가중치를 설정
+from keras.preprocessing.image import ImageDataGenerator # 자체적으로 이미지를 다룰수 있는 기능 
+from keras.models import Model, load_model # 모델 저장, 불러오기
+from keras.models import Sequential # 입력,은닉,출력층 생성/Sequential.add()로 만듦
+
+from keras.layers import Input # Input(shape=(784,))
+# input = tf.placeholder(tf.float32, shape=(20,1))
+from keras.layers import Dropout # 과적합 방지, 데이터의 20%를 무작위로 0 
+from keras.layers.core import Dropout
+# dropout = tf.keras.layers.Dropout(rate=0.2)(input)
+from keras.layers import SpatialDropout1D, SpatialDropout2D
+# tf.keras.layers.SpatialDropout1D()
+from keras.layers import Lambda # input에 원하는 함수를 만들수 있음 ex) 각 입력에 +1
+from keras.layers.core import Lambda 
+
+# CNN(Convolution)
+from keras.layers import Conv1D, Conv2D, Conv2DTranspose
+from keras.layers.convolutional import Conv1D, Conv2D, Conv2DTranspose
+# input = tf.placeholder(tf.float32, shape=(1,28,28))
+# dropout = tf.keras.layers.Dropout(rate=0.2)(input)
+# conv = tf.keras.layers.Conv1D(filters=10, kernel_size=3, padding='same', activation=tf.nn.relu)(dropout)  
+from keras.layers import UpSampling2D # 가로, 세로 크기 2배로 늘려줌
+from keras.layers import MaxPooling1D, MaxPooling2D # MXN으로 분리, 각 부분별로 최대값을 뽑아냄
+from keras.layers.pooling import MaxPooling1D, MaxPooling2D
+# max_pool = tf.keras.layers.MaxPool1D(pool_size=3, padding='same')(conv)
+from keras.layers import GlobalMaxPooling1D, GlobalMaxPooling2D # MXN분리없이 전체에서 최대값 1개 선택
+from keras.layers import Flatten # 메트릭스 형태 -> 백터화
+# flatten = tf.keras.layers.Flatten()(max_pool)
+
+from keras.layers import Dense # Fully-Connected층 생성 
+from keras.layers.core import Dense
+# hidden = tf.keras.layers.Dense(units=50, activation = tf.nn.relu)(flatten)
+from tensorflow.keras.layers import BatchNormalization # 데이터를 정규 분포로 만듦
+# net = tf.keras.layers.BatchNormalization()(net)
+from keras.layers import Activation # 활성화함수 ex.relu
+from keras.layers.core import Activation
+# net = tf.keras.layers.Activation(activation='relu')(net)
+
+
+# https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=chunjein&logNo=221589656211
+from keras.layers import Bidirectional
+# Bidirectional(LSTM(3, return_sequences=True), merge_mode = 'concat')(Input)
+
+
+from keras.layers.merge import Concatenate
+# first = Sequential().add(Dense(1, input_shape=(2,), activation='sigmoid'))
+# second = Sequential().add(Dense(1, input_shape=(1,), activation='sigmoid'))
+# merged = Concatenate([first, second])
+
+from tensorflow.keras.optimizers import Adam # olm-abc
+from keras.callbacks import ModelCheckpoint, Callback, EarlyStopping
+from keras import losses, activations
+from keras.layers.advanced_activations import PReLU
+from keras.layers.noise import GaussianDropout # caan-mceprg
+from keras.wrappers.scikit_learn import KerasRegressor
+
+
+from keras import backend as K
+from keras.layers.recurrent import LSTM, GRU
+from keras.layers.embeddings import Embedding
+from keras.utils import np_utils
+
