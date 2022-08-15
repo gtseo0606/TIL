@@ -1,8 +1,8 @@
-#### µ¥ÀÌÅÍ ½Ã°¢È­
+#### ë°ì´í„° ì‹œê°í™”
 
-### 1.µ¶¸³º¯¼ö(X)º° Á¾¼Óº¯¼ö(Y) ½Ã°¢È­
+### 1.ë…ë¦½ë³€ìˆ˜(X)ë³„ ì¢…ì†ë³€ìˆ˜(Y) ì‹œê°í™”
 
-##¹æ¹ı 1
+##ë°©ë²• 1
 data_list <- (colnames(data) != "Y") %>% which()
 
 lst <- map(data_list, function(i) {df_list <- colnames(data)[i]
@@ -16,15 +16,15 @@ data %>% select(df_list, count) %>% rename(aa <- df_list)
 
 grid.arrange(grobs = lst, ncol = 2)
 
-## ¹æ¹ı 2
-# Á¾¼Óº¯¼ö¸¦ Àß ¼³¸íÇÏ´Â µ¶¸³º¯¼ö ¼±ÅÃ(È¸±ÍºĞ¼®, ¿¹ÃøºĞ¼®)
+## ë°©ë²• 2
+# ì¢…ì†ë³€ìˆ˜ë¥¼ ì˜ ì„¤ëª…í•˜ëŠ” ë…ë¦½ë³€ìˆ˜ ì„ íƒ(íšŒê·€ë¶„ì„, ì˜ˆì¸¡ë¶„ì„)
 pairs(data %>% sample_n(min(1000, nrow(data))),
       lower.panel=function(x,y){points(x,y); abline(0, 1, col='red')},
       upper.panel = panel.cor) 
 
-## ¹æ¹ı 3
-# º¯¼ö¿Í ºóµµ¼ö
-# ggplot2, dplyr, gridExtra ÆĞÅ°Áö
+## ë°©ë²• 3
+# ë³€ìˆ˜ì™€ ë¹ˆë„ìˆ˜
+# ggplot2, dplyr, gridExtra íŒ¨í‚¤ì§€
 
 p1 <- data %>% ggplot(aes(Y)) + geom_bar()
 p2 <- data %>% ggplot(aes(factor(Y), X1)) + geom_boxplot()
