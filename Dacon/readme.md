@@ -16,7 +16,7 @@
 |------|---|---|
 |KBO 타자 OPS 예측 / KBO|2022-06-21 ~ 2022-06-27|회귀/WRMSE|
 |반도체 박막 두께 분석 경진대회 / Semiconductor Film Thickness|2022-06-21 ~ 2022-06-24|다중회귀/MAE|
-|상점 신용카드 매출 예측 /  Sales Prediction|2022-06-21 ~ 2022-06-|회귀/MAE|
+|상점 신용카드 매출 예측 / Sales Prediction|2022-06-21 ~ 2022-06-24|회귀/MAE|
 |퇴근시간 버스승차인원 예측 / Bus Passengers Prediction|2022-06-21 ~ 2022-06-23|회귀/RMSE|
 |KBO 외국인 투수 스카우팅 최적화 / Pitcher Scouting|2022-06-23 ~ 2022-06-25|회귀/RMSE|
 
