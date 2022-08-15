@@ -9,7 +9,7 @@
 |대회명|기간|최종순위|특징|
 |------|---|---|---|
 |따릉이 대여량 예측 / Bike Sharing Demand Prediction|2022-06-28 ~ 2022-07-04|36/94|회귀/NMAE|
-|쇼핑몰 지점별 매출액 예측 경진대회 / Sales Prediction|2022-07-11 ~ 2022-08-05|3/694|정형/RMSE|
+|[쇼핑몰 지점별 매출액 예측 경진대회]/ Sales Prediction(https://github.com/gtseo0606/Learned/tree/main/Dacon/%EC%87%BC%ED%95%91%EB%AA%B0%20%EC%A7%80%EC%A0%90%EB%B3%84%20%EB%A7%A4%EC%B6%9C%EC%95%A1%20%EC%98%88%EC%B8%A1%20%EA%B2%BD%EC%A7%84%EB%8C%80%ED%9A%8C)|2022-07-11 ~ 2022-08-05|3/694|정형/RMSE|
 |쇼핑몰 리뷰 평점 분류 경진대회 / Shop Review Classification|2022-07-11 ~ 2022-08-05|19/254|NLP/Accuracy|
 |신용카드 사기 거래 탐지 / Fraudulent Transaction Detection|2022-07-01 ~ 2022-08-05|21/752|비지도학습/Macro-F1|
 |팔당댐 홍수 안전운영에 따른 한강 수위예측 / 한국수력원자력|2022-07-25 ~ 2022-09-02|현11/200|시계열|
