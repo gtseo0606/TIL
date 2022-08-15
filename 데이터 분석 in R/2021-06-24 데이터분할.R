@@ -1,24 +1,24 @@
-#### ╣╔юлем ╨пгр
+#### К█╟Л²╢М└╟ К╤└М∙═
 
-### 1. train/test ╣╔юлем Ё╙╢╘╠Б
+### 1. train/test К█╟Л²╢М└╟ К┌≤К┬└Й╦╟
 
-## ╧Ф╧Щ 1
+## К╟╘К╡∙ 1
 idx <- sample(1:nrow(data), size = nrow(data)*0.7, replace=FALSE)
 train <- data[idx,]
 test <- data[-idx,]
 
-train1 <- train[,c("X1","X2")] #©Ьго╢б ╨╞╪Ж╦╦ ╩Г©К
+train1 <- train[,c("X1","X2")] #Л⌡░М∙≤К┼■ КЁ─Л┬≤К╖▄ Л┌╛Л ╘
 test1 <- test[,c("X1","X2")]
 
-## ╧Ф╧Щ 2
+## К╟╘К╡∙ 2
 part <- caret :: createDataPartition(data$Y, p=0.7)
 idx <- as.vector(part[[1]])
 train <- data[idx,]
 test <- data[-idx,]
 
-### 2. train/validate/test ╣╔юлем Ё╙╢╘╠Б
+### 2. train/validate/test К█╟Л²╢М└╟ К┌≤К┬└Й╦╟
 
-## ╧Ф╧Щ 1
+## К╟╘К╡∙ 1
 n <- nrow(data)
 idx <- 1:n
 
