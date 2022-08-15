@@ -1,23 +1,23 @@
-## º¯¼ö »ı¼º
+## ë³€ìˆ˜ ìƒì„±
 
-# 1. º¯¼ö »ı¼º, Àç¹üÁÖÈ­
+# 1. ë³€ìˆ˜ ìƒì„±, ì¬ë²”ì£¼í™”
 
-#¹æ¹ı 1
+#ë°©ë²• 1
 data <- transform(data, new_X1 <- X1+X2+X3)
 
-#¹æ¹ı 2
+#ë°©ë²• 2
 data<-within(data,
              {X1_Class=character(0) #integer(0)
              X1_Class[ X1 %in% c("LS", "ST", "RS", "RW") ]="Forward"+
                X1_Class[ X1 %in% c("LAM", "CAM", "RAM", "RM") ]="Midfielder"} )
 
-#¹æ¹ı 3
+#ë°©ë²• 3
 data<- data %>% mutate(X1 = dplyr :: case_when(X1 == "LS" ~ "Forward",
                                                (X1 %in% c("LAM", "CAM") ~ "Midfielder"))
                        
-#2. µ¥ÀÌÅÍ ÇüÅÂ º¯È¯
+#2. ë°ì´í„° í˜•íƒœ ë³€í™˜
 
-#¹æ¹ı1
+#ë°©ë²•1
 data$X1_Class<-factor(data$X1_Class, 
                      levels=c("Forward", "Midfielder"), 
                      labels=c("Forward", "Midfielder"))
