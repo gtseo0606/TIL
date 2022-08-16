@@ -15,7 +15,6 @@
 |[팔당댐 홍수 안전운영에 따른 한강 수위예측](https://github.com/gtseo0606/Learned/tree/main/Dacon/%ED%8C%94%EB%8B%B9%EB%8C%90%20%ED%99%8D%EC%88%98%20%EC%95%88%EC%A0%84%EC%9A%B4%EC%98%81%EC%97%90%20%EB%94%B0%EB%A5%B8%20%ED%95%9C%EA%B0%95%20%EC%88%98%EC%9C%84%EC%98%88%EC%B8%A1%20AI%20%EA%B2%BD%EC%A7%84%EB%8C%80%ED%9A%8C)|2022-07-25 ~ 2022-09-02|현11/200|한국수력원자력/시계열|
 |[자율주행 센서의 안테나 성능 예측](https://github.com/gtseo0606/Learned/tree/main/Dacon/%EC%9E%90%EC%9C%A8%EC%A3%BC%ED%96%89%20%EC%84%BC%EC%84%9C%EC%9D%98%20%EC%95%88%ED%85%8C%EB%82%98%20%EC%84%B1%EB%8A%A5%20%EC%98%88%EC%B8%A1)|2022-08-01 ~ 2022-08-26|현-/1000|LG/회귀/NRMSE|
 
-
 ### Dacon 대회 종료 후 참여
 
 |대회명|기간|특징|
@@ -26,22 +25,21 @@
 |[퇴근시간 버스승차인원 예측 / Bus Passengers Prediction](https://github.com/gtseo0606/Learned/tree/main/Dacon/%ED%87%B4%EA%B7%BC%EC%8B%9C%EA%B0%84%20%EB%B2%84%EC%8A%A4%EC%8A%B9%EC%B0%A8%EC%9D%B8%EC%9B%90%20%EC%98%88%EC%B8%A1)|2022-06-21 ~ 2022-06-23|회귀/RMSE|
 |[KBO 외국인 투수 스카우팅 최적화 / Pitcher Scouting](https://github.com/gtseo0606/Learned/tree/main/Dacon/KBO%20%EC%99%B8%EA%B5%AD%EC%9D%B8%20%ED%88%AC%EC%88%98%20%EC%8A%A4%EC%B9%B4%EC%9A%B0%ED%8C%85%20%EC%B5%9C%EC%A0%81%ED%99%94)|2022-06-23 ~ 2022-06-25|회귀/RMSE|
 
-
 ### Kaggle 대회 종료 후 참여
 
 |대회명|공부기간|
 |------|---|
-|[Porto Seguro’s Safe Driver Prediction](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Porto%20Seguro%E2%80%99s%20Safe%20Driver%20Prediction)|2022-02-02 ~ 2022-02-14|
-|[Home Credit Default Risk](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Home%20Credit%20Default%20Risk)|2022-02-14 ~ 2022-02-21|
-|[Costa Rican Household Poverty Level Prediction](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Costa%20Rican%20Household%20Poverty%20Level%20Prediction)|2022-02-21 ~ 2022-03-13|
-|[Statoil / C-CORE Iceberg Classifier Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Statoil%2C%20C-CORE%20Iceberg%20Classifier)|2022-03-14 ~ 2022-03-18|
-|[TensorFlow Speech Recognition Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/TensorFlow%20Speech%20Recognition)|2022-03-19 ~ 2022-03-29|
+|[보험금 청구 시작확률 예측 / Porto Seguro’s Safe Driver Prediction](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Porto%20Seguro%E2%80%99s%20Safe%20Driver%20Prediction)|2022-02-02 ~ 2022-02-14|
+|[대출 상환 예측 / Home Credit Default Risk](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Home%20Credit%20Default%20Risk)|2022-02-14 ~ 2022-02-21|
+|[코스타리카 가구 빈곤 수준 예측 / Costa Rican Household Poverty Level Prediction](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Costa%20Rican%20Household%20Poverty%20Level%20Prediction)|2022-02-21 ~ 2022-03-13|
+|[위성사진 기반 빙산/선박 분류 / Statoil / C-CORE Iceberg Classifier Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Statoil%2C%20C-CORE%20Iceberg%20Classifier)|2022-03-14 ~ 2022-03-18|
+|[1초 내외의 음성파일 분류 / TensorFlow Speech Recognition Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/TensorFlow%20Speech%20Recognition)|2022-03-19 ~ 2022-03-29|
 |[정리](https://github.com/gtseo0606/Learned/tree/main/Kaggle/%EC%A0%95%EB%A6%AC)|2022-03-30 ~ 2022-04-25|
-|[New York City Taxi Trip Duration](https://github.com/gtseo0606/Learned/tree/main/Kaggle/New%20York%20City%20Taxi%20Trip%20Duration)|2022-04-26 ~ 2022-04-28|
-|[Zillow’s Home Value Prediction](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Zillow%E2%80%99s%20Home%20Value%20Prediction)|2022-04-28 ~ 2022-05-01|
-|[2018 Data Science Bowl](https://github.com/gtseo0606/Learned/tree/main/Kaggle/2018%20Data%20Science%20Bowl)|2022-05-02 ~ 2022-05-07|
-|[Spooky Author Identification](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Spooky%20Author%20Identification)|2022-05-08 ~ 2022-05-20|
-|[Mercari Price Suggestion Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Mercari%20Price%20Suggestion)|2022-05-21 ~ |
+|[뉴욕시의 택시 총 운행 시간 예측 / New York City Taxi Trip Duration](https://github.com/gtseo0606/Learned/tree/main/Kaggle/New%20York%20City%20Taxi%20Trip%20Duration)|2022-04-26 ~ 2022-04-28|
+|[온라인 부동산회사의 매매가 예측 / Zillow’s Home Value Prediction](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Zillow%E2%80%99s%20Home%20Value%20Prediction)|2022-04-28 ~ 2022-05-01|
+|[의학 세포 분류 / 2018 Data Science Bowl](https://github.com/gtseo0606/Learned/tree/main/Kaggle/2018%20Data%20Science%20Bowl)|2022-05-02 ~ 2022-05-07|
+|[작가 분류 / Spooky Author Identification](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Spooky%20Author%20Identification)|2022-05-08 ~ 2022-05-20|
+|[의류사의 리뷰기반 가격예측 / Mercari Price Suggestion Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Mercari%20Price%20Suggestion)|2022-05-21 ~ |
 
 ## Android(Java)
  * (Java 기반 Android 9.0(pie) APP 개발 기본/심화/고급)
