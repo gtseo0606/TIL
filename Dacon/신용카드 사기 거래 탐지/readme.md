@@ -1,5 +1,6 @@
 대회 link : https://dacon.io/competitions/official/235930/overview/description
 
+데이터 link : https://www.notion.so/2c2f10cdd08e49cfbd31d1772ef577a1
 
 코드 link : https://dacon.io/codeshare/5998
 
