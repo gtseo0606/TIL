@@ -2,7 +2,7 @@
  * 데이터 전처리/데이터 분석
 
 ## Python
- * (Kaggle/Dacon/OpenCV/AI(ML/DL)/데이터 전처리/데이터 분석/알고리즘)
+ * Kaggle/Dacon/OpenCV/AI(ML/DL)/데이터 전처리/데이터 분석/알고리즘
  
 ### Dacon 대회 참여
 
