@@ -11,4 +11,4 @@
 
 ![Untitled (4)](https://user-images.githubusercontent.com/74644453/189900716-809a6dc9-50e3-4905-a1ac-36bfd57e4f69.png)
 
-![17  서근태 기부금영수증_1](https://user-images.githubusercontent.com/74644453/190955252-e85c2c95-c9de-41ff-b145-e53f6c79a51b.png)
+![image](https://user-images.githubusercontent.com/74644453/190955371-613008cd-5c8d-4e7e-bfe9-7a8d0ec85b77.png)
