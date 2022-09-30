@@ -13,4 +13,4 @@
 |[온라인 부동산회사의 매매가 예측 / Zillow’s Home Value Prediction](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Zillow%E2%80%99s%20Home%20Value%20Prediction)|2022-04-28 ~ 2022-05-01|
 |[의학 세포 분류 / 2018 Data Science Bowl](https://github.com/gtseo0606/Learned/tree/main/Kaggle/2018%20Data%20Science%20Bowl)|2022-05-02 ~ 2022-05-07|
 |[작가 분류 / Spooky Author Identification](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Spooky%20Author%20Identification)|2022-05-08 ~ 2022-05-20|
-|[의류사의 리뷰기반 가격예측 / Mercari Price Suggestion Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Mercari%20Price%20Suggestion)|2022-05-21 ~ |
+|[의류사의 리뷰기반 가격예측 / Mercari Price Suggestion Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Mercari%20Price%20Suggestion)|2022-05-21 ~ 2022|
