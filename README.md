@@ -42,7 +42,7 @@
 |[의류사의 리뷰기반 가격예측 / Mercari Price Suggestion Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Mercari%20Price%20Suggestion)|2022-05-21 ~ 2022-05-30|
 
 ## Android(Java)
- * (Java 기반 Android 9.0(pie) APP 개발 기본 /심화/고급)
+ * (Java 기반 Android 9.0(pie) APP 개발 기본 / 심화/고급)
 
 ## 책
  * 이것이 취업을 위한 코딩테스트다
