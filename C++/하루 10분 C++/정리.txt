@@ -6,7 +6,6 @@
 ====================
 int a; // 선언('자료형' '변수')
 a = 7; // 대입
-
 int b = 3; // 초기화(선언과 동시에 대입)
 
 // 이중블록
@@ -22,33 +21,31 @@ int b = 3; // 초기화(선언과 동시에 대입)
 ====================
 #include <climits>
 
-정수형 short(2byte)<int(4byte)<long(4byte)<long long(8byte)
+정수형 
+short(2byte)<int(4byte)<long(4byte)<long long(8byte)
 
 unsigned int a; // unsigned는 음수값을 사용하지 못함
-unsigned shjort b; // 0~65535(-31768~327677) 
+unsigned short b; // 0~65535(-31768~327677) 
 
 실수형 
 float a =3.14;
-
-
 ====================
 1-3. 문자형 자료형과 bool형 자료형
 ====================
+char
+작은 문자형. + 작은따옴표 // 큰따옴표에는 null값이 포함
 
-char : 작은 문자형. + 작은따옴표
-bool  : 0(false) or 1(true)
+bool
+0(false) or 1(true)
 
 bool a = 0; // 0
 bool b = 1; // 1
 bool c = 10; // 1
-
-
 ====================
-1-4. const 제한자와 데이터형 변환
+1-4. const(상수) 제한자와 데이터형 변환
 ====================
-
 상수 선언
-#define PIE 3.141592 // c 
+#define PIE 3.141592 // c   
 -> const float PIE 3.141592; //c++
 
 PIE =10 // 불가
@@ -59,8 +56,6 @@ typeName(a) = (typeName)a
 char ch = 'M';
 cout << (int)ch << "  " << int(ch) << endl; // 77 77
 cout << static_cast<int>(ch) << end l; // 77
-
-
 ====================
 1-5. C++ 산술연산자와 auto
 ====================
@@ -71,57 +66,92 @@ cout << static_cast<int>(ch) << end l; // 77
 auto x = 0.0; // float 
 float y =0;
 auto z = 0; // int
-
 ====================
-2-1. 배열과 문자열
+2-1. 배열(array)과 문자열
 ====================
+/*
+배열 :  같은 데이터형의 집합
+기본형태
+typeName arrayName[arraySize];
+-> short month[12]; // 선언 (12개의 short형 데이터 저장가능)
+*/
 
-short month[12]; // 선언 (12개의 short형 데이터 저장가능)
+short month[12] = { 1, 2, 3 }; // 콤마와 중괄호
+cout << month[0] << endl;
 
-short month[12] = { 1, 2, 3 };
-cout << month[1] << endl;
-
-char a[] = "Hello" // 큰따옴표에는 null값이 포함
+// 문자열을 사용하려고 배열 이용
+char a[5] = {'H', 'e', 'l', 'l', 'o'}; // 실행하면 Hello?@$^! 처럼 뒤에 이상한 문자가 붙음
+char a[6] = {'H', 'e', 'l', 'l', 'o', '\0'}; # Hello 
+-> char a[] = "Hello" // 큰따옴표에는 null값이 포함 -> 더효율적인 문자열 배열 가능
 cout << a << endl;
-
-
 ====================
-2-2. 사용자 입력과 string
+2-2. 사용자 입력(cin, get/getline)과 string
 ====================
-cin.getline(name1, Size) //whitespace 적용가능
+#include <cstring> // strlen
+strlen(name1) // 문자열 길이 반환
+sizeof(name1) // 변수의 바이트 크기 반환
+
+cin.getline(name1, Size) //whitespace 적용가능(띄어쓰기 이후 타이핑한 것도 출력)
 = cin.get(name1, Size) 
 
+배열 vs string
+배열을 다른 배열에 통째로 넣을 수 없음
+ex)
 string(복합데이터형)
 char char1[20];
 char char2[20] = 'jauar';
 string str1;
 string str2 = "panda";
-// char1 = char2; // 틀림(통째로 값을 대입할 수 없다.)
+char1 = char2; // 틀림(통째로 값을 대입할 수 없다.)
 str1 = str2; // 통째로 값을 대입할 수 있다.
-
 ====================
-2-3. 구조체
+2-3. 구조체(struct)
 ====================
-
-구조체 : 다른 데이터형이 허용되는 데이터의 집합
+구조체 : 다른 데이터형이 허용되는 데이터의 집합(클래스의 일종)
 배열 :  같은 데이터형의 집합
+구조체 vs 클래스
+클래스는 클래스 내에 선언된 함수로만 초기화 가능
+구조체는 함수의 외부에서도 빼고 초기화 가능하다.
+구조체 외부에 함수와 달리 구조체 내에 함수는 inline으로 처리된다.
 
 struct MyStruct
 {
-	string name;
+	string name; // 멤버
 	string position;
 	int heght;
 	int weight;
-};
+} B ; //구조체를 정의하는 부분에서 중괄호 뒤에 변수명을 입력하면
+새로운 구조체를 선언(// 초기화를 선언 + 구조체에 대입)하지 않아도
+구조체가 자동으로 만들어짐
 
+// MyStruct형 변수A
+MyStruct A; //.(dot) = 구조체의 멤버연산자
+A.name = "Son"
+A.position = "Striker",
+A.height = 183;
+A.weight = 77;
 
+// 초기화를 선언 + 구조체에 대입
 MyStruct A = {
  	"Son"
 	"Striker",
-	183,
+	183, 
 	77
 };
 
+cout << A.name <<endl;
+cout << A.position<<endl;
+cout << A.height <<endl;
+cout << A.weight <<endl;
+
+
+구조체 역시 배열(대괄호로 크기 지정)로 선언 가능
+배열 초기화(중괄호 사용)
+MyStruct A[2] = { 
+	{"A", "A", 1, 1 },
+	{"B", "B", 2, 2 }};
+
+cout << A[0].height <<endl;
 ====================
 2-4. 공용체와 열거체
 ====================
@@ -439,38 +469,6 @@ public:
 생성자는 리턴 타입이 없다. (void도 아니다.)
 
 매개 변수를 갖지 않거나 모두 기본값이 설정된 매개 변수를 가지고 있는 생성자를 기본 생성자(Default constructor)라고 한다. 클래스를 인스턴스화할 때 사용자가 초기값을 제공하지 않으면 기본 생성자가 호출된다.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
