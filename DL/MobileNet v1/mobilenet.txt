@@ -1,0 +1,85 @@
+conv vs mobilenet 연산량 비교
+conv
+필터 가로*필터 세로*채널 수*필터 개수 * 입력 이미지 가로 *입력 이미지 세로
+3*3*3*32*224*224 = 43,352,064
+
+mobilenet
+depthwise (필터 가로*필터 세로*채널 수*입력이미지 가로*입력 이미지 세로) 
++ pointwise (입력이미지 가로*입력 이미지 세로*채널 수*필터 수)
+3*3*3*224*224 + 224*224*3*32 = 1,354,752 + 4,816,896 = 6,171,648
+1*1*3*32*224*224
+
+Conv / s2
+224*224*3(가로길이*세로길이*채널rgb) 
++ 3*3*3*32(가로길이*세로길이*채널rgb+필터의 개수) 
+-> 112*112*32(가로길이*세로길이*output 채널이자 필터 개수)
+계산식 : (224-3+2*0)/2 +1 = 221/2+1 = 110.5+1 -> 111.5
+
+Conv dw / s1
+112*112*32(가로길이*세로길이*채널32)
++ 3*3*32(가로길이*세로길이*필터의 개수) 
+-> 112*112*32
+계산식 : (112-3+2*1)/1 +1 = 109+2*1/1+1 = 111+1 -> 112
+
+
+Conv / s1
+112*112*32(가로길이*세로길이*채널) 
++ 1*1*32*64(가로길이*세로길이*채널+필터의 개수) 
+-> 112*112*64(가로길이*세로길이*채널)
+계산식 : (112-1+2*0)/1 +1 = 111/1+1 = 112
+
+Conv dw / s2
+112*112*64(가로길이*세로길이*채널)
++ 3*3*64(가로길이*세로길이*필터의 개수) 
+-> 112*112*32
+계산식 : (112-3+2*0)/2 +1 = 109/2+1 = 54.5+1 -> 55.5
+
+
+class MobileNet(nn.Module):
+    def __init__(self):
+        super(MobileNet, self).__init__()
+
+        def conv_bn(input, output, stride, padding): # 처음 시작할때 convolution
+            return nn.Sequential(
+                nn.Conv2d(input, output, 3, stride, padding, bias=False),
+                nn.BatchNorm2d(out),
+                nn.ReLU(inplace=True)
+            )
+
+        def conv_dw(input, output, stride, padding): # depthwise separable convolution
+            return nn.Sequential( # depthwise convolution
+                nn.Conv2d(input, output, 3, stride, padding, groups=in, bias=False), 
+                nn.BatchNorm2d(input),
+                nn.ReLU(inplace=True),
+    
+                nn.Conv2d(input, output, 1, 1, 0, bias=False), # pointwise convolution
+                nn.BatchNorm2d(output),
+                nn.ReLU(inplace=True),
+            )
+
+        self.model = nn.Sequential(
+            conv_bn(  3,  32, 2), 
+            conv_dw( 32,  64, 1),
+            conv_dw( 64, 128, 2),
+            conv_dw(128, 128, 1),
+            conv_dw(128, 256, 2),
+            conv_dw(256, 256, 1),
+            conv_dw(256, 512, 2),
+            conv_dw(512, 512, 1),
+            conv_dw(512, 512, 1),
+            conv_dw(512, 512, 1),
+            conv_dw(512, 512, 1),
+            conv_dw(512, 512, 1),
+            conv_dw(512, 1024, 2),
+            conv_dw(1024, 1024, 1),
+            nn.AvgPool2d(7),
+        )
+        self.fc = nn.Linear(1024, 1000)
+
+    def forward(self, x):
+        x = self.model(x)
+        x = x.view(-1, 1024)
+        x = self.fc(x)
+        return x
+
+
