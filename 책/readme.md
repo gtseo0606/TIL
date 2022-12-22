@@ -5,4 +5,5 @@
 * 밑바닥부터 시작하는
 * 데이콘 경진대회 1등 솔루션
 * 실전! 파이토치 딥러닝 프로젝트
+* Hands-On-Deep-Learning-For-IoT-Train-Neural-Network-Models-To-Develop-Intelligent-IoT-Applications
 
