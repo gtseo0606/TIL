@@ -1,9 +1,3 @@
-## R 
- * 데이터 전처리 / 데이터 분석
-
-## Python
- * Kaggle / Dacon / OpenCV / AI(ML/DL) / 데이터 전처리 / 데이터 분석 / 알고리즘
- 
 ### Dacon 대회 수상 및 참여
 
 |대회명|기간|최종순위|특징|
@@ -40,13 +34,3 @@
 |[의학 세포 분류 / 2018 Data Science Bowl](https://github.com/gtseo0606/Learned/tree/main/Kaggle/2018%20Data%20Science%20Bowl)|2022-05-02 ~ 2022-05-07|
 |[작가 분류 / Spooky Author Identification](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Spooky%20Author%20Identification)|2022-05-08 ~ 2022-05-20|
 |[의류사의 리뷰기반 가격예측 / Mercari Price Suggestion Challenge](https://github.com/gtseo0606/Learned/tree/main/Kaggle/Mercari%20Price%20Suggestion)|2022-05-21 ~ 2022-05-30|
-
-## Android(Java)
- * Java 기반 Android 9.0(pie) APP 개발 기본 / 심화 / 고급
-
-## 책
- * 이것이 취업을 위한 코딩테스트다
- * 핸즈온 머신러닝(Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow)
- * 밑바닥부터 시작하는 
- * 데이콘 경진대회 1등 솔루션
- * 실전! 파이토치 딥러닝 프로젝트
