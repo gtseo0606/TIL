@@ -8,8 +8,9 @@ t,c,n,s = (-, 32, 1, 2)
 + 3x3x3x32
 -> 112x112x32
 
-Operator : bottleneck
 =======================
+
+Operator : bottleneck
 t : expansion factor
 c : output channel의 수
 n : 반복 횟수
@@ -18,6 +19,7 @@ hx w x k
 -> h x w x (tk)
 -> h/s x w/s x (tk)
 -> h/s x w/s x k`(channel)
+
 ========================
 
 2. Operator : bottleneck
