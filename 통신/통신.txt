@@ -1,0 +1,148 @@
+WireShark
+
+
+Application layer(응용계층)  # Data
+			# HTTP, FTP, SMTP, POP3, IMAP, Telnet 등과 같은 프로토콜
+			# WebScoket 프로토콜
+Presentation layer(표현계층) # Data
+	     		# CSS
+Session layer # Data
+	     # 서버-클라이언트 접속상태(네이버 로그인)
+
+Transport(How well) # 세그먼트
+		  = 세그먼트/데이터그램 Header(발신지 포트 ex. 192.168.0.34+수신지 포트) + 데이터를 네트워크를 통한 전송을 위해 분할한 조각
+		  # seg0(Segment0) -> seg2 다른 라우팅으로 업데이트
+		  # TCP(->Segment) : Network layer의 송수신환경을 100%로 구축, 택배기사처럼
+ 		  # UDP(->Datagram) 
+		  # 웹 소켓 :  TCP의 양방향 전이중 통신을 사용하기 때문에 전송 계층(Transport Layer)에 의존
+
+Network layer(How) # (IP) 패킷
+                           = (IP) 패킷 헤더(IP Address=발신지 컴퓨터주소(Source IP(ex. 192.168.0.34)) + 수신지 주소(Destination IP(ex. 52.144.36.177)) + 데이터그램/세그먼트 헤더(PORT) + 페이로드		  
+		  # port로 구분 ex. 0~65535번
+		  # IP NET(망)
+		  # 브라우저(chrome, edge)별로 port 번호를 다르게 부여
+	               # 라우터
+
+Data-link layer # Frame
+	       = 프레임 헤더(MAC Address) + 패킷 헤더(IP Address) + 데이터그램/세그먼트 헤더(port) + 페이로드+ CRC 체크섬을 위한 Trailer
+	       # MAC Address ex. 70-5D-CC-FC-8F-3A # 6bytes=6*8=48bits       
+	       # (IP NET) + LAN + 이더넷-랜선(유선) + 노트북
+	       # (IP NET) + 공유기 + wifi(무선) + 핸드폰
+
+Physical layer # Bits(0 -> 0, 1 -> 1)
+	      # wired(유선) ex.동축 케이블 (Coaxial cable)
+                   # wireless(무선) ex. AIR 공기의
+
+한국 - 미국 # 라우터(광케이블) 최적의 경로를 자동화 업데이트
+
+용어
+1. HTTP : TCP를 이용하여 서버랑 브라우저랑 서로 데이터를 주고받기 위해 만든 프로토콜
+           : 반이중모드
+
+2. 웹소켓 : HTTP와 달리, TCP 연결에 완전한 이중통신
+	: 브라우저가 웹서버에 접속하면 연결을 종료하지 않는다.	
+	: 응용프로그램이 클라이언트 서버 모델(Client-server model) 구조일 경우, 
+              웹소켓 기술을 활용하면 클라이언트와 서버가 실시간으로 통신할 수 있다. 
+	  채팅, 주식 관련 서비스에서 데이터가 빠르게 교환될 수 있는 것도 웹소켓 기술 덕분이다.
+
+3.  페이로드(payload) : 전송되는 Data(패킷)를 의미, 
+데이터를 전송할 때, header와 메타데이터, 에러 체크 비트 등과 같은 다양한 요소들을 함께 보내 데이터 전송의 효율과 안정성을 높히게 됩니다. 
+이 때, 보내고자 하는 데이터 자체를 의미하는 것이 바로 페이로드입니다.
+ex. 편지지는 페이로드, 편지봉투는 헤더, 글내용은 메세지
+
+4. 인캡슐레이션(encapsulation)
+
+페이로드에 일련의 헤더를 붙이는 과정
+운영체제가 데이터를 송신하는 과정
+메시지 → 데이터그램/세그먼트 → 패킷 → 프레임 → 비트
+
+5. 디캡슐레이션(decapsulation)
+
+일련의 헤더를 제거하는 과정
+데이터를 수신하는 과정
+비트 → 프레임 → 패킷 → 데이터그램/세그먼트 → 메시지
+
+6. DNS
+도메인주소(www.com24everyday.tistory.com) 을 IP주소(예 128.0.0.1)로 변환해준다.
+
+7. 서브넷 마스크 
+: IP 주소에서 네트워크 ID 와 호스트 ID 를 구별하는 식별자 
+
+IP주소 192. 1. 2 . 3
+서브넷 마스크 255.255.255.0
+네트워크 ID 192.1.2
+호스트 ID 3 
+ 
+네트워크 ID 는 같은 LAN을 사용하고 있는거라 볼 수 있다. 
+그 같은 네트워크 사이에서 각 호스트를 구별하기 위한 것이 호스트 ID 이다. 
+LAN 들 사이를 이어주는 것이 게이트웨이 즉 라우팅(routing) 이다. 
+
+8. 맥주소(MAC address) 
+: 물리적 주소 
+ 
+같은 LAN 영역 안에서 내부 통신하는 것을 스위칭이라고 한다. 라우팅과는 무관한 것. 
+근데 내부 통신을 할려면 자기 자신과 상대방 호스트를 구분할 수 있는 주소가 있어야하는데 이게 맥 주소다
+IP 주소와 달리 16진수고 반 반으로 OUI 와 일련번호이다. 
+
+
+9. (이동) ad hoc 네트워크
+고정된 기반 망의 도움 없이 이동 노드들간에 자율적으로 구성되는 망으로서,
+네트워크에 자율성과 융통성을 부여한 네트워크 이다.
+고정된 유선망을 가지지 않고 이동호스트(Mobile Host)로만 이루어져 통신되는 망이다. 
+
+
+10. 라우팅
+라우팅은 어떤 네트워크 안에서 통신 데이터를 보낼 때 최적의 경로를 선택하는 과정이다. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+x축(시간), y축(주기)
+10초에 4번의 주기 -> 1초에 4/10번의 주기 -> 0.4Hz -> f = 2.5
+
+2.4G(회전성), AM(저주파/회전성)
+5G(직진성) -> 5*10^12, FM(고주파/직진성)
+
+번외
+csci 형상관리를 하는 단위
+csc 독립적으로 배포 가능한 단위
+csu 독립적으로 테스트 가능한 단위 
+
+CAN 문서
+
+Frame의 구조
+SOF(Start OF Frame)
+-> Aribitration : 배급
+= ID(메시지의 우선순위를 설정, 이진값이 낮을수록 우선순위가 높음) + RTR(remote transmission request=원격전송요청)
+= ID + SRR(substitute remote request=원격요청대체) + IDE(identifier extension =CAN Standard 프레임과 CAN Extended 프레임 구분) + ID + RTR
+-> Control
+= IDE + R0(Reserved bit=예약된 bit) + DLC(Data Length Code=전송 중인 데이터의 바이트 수)
+-> Data
+-> CRC(Cyclic Redundancy Check=순환반복검사=16bit checksum) : 정상적인 송수신 여부확인
+-> ACK(Acknowledgement 승인) : 확인했는지 여부
+-> EOF(End Of Frame)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
