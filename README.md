@@ -1,4 +1,4 @@
-### Dacon 대회 수상 및 참여
+### Dacon
 
 |대회명|기간|최종순위|특징|
 |------|---|---|---|
@@ -9,8 +9,6 @@
 |[자율주행 센서의 안테나 성능 예측](https://github.com/gtseo0606/Learned/tree/main/Dacon/%EC%9E%90%EC%9C%A8%EC%A3%BC%ED%96%89%20%EC%84%BC%EC%84%9C%EC%9D%98%20%EC%95%88%ED%85%8C%EB%82%98%20%EC%84%B1%EB%8A%A5%20%EC%98%88%EC%B8%A1)|2022-08-01 ~ 2022-08-26|300/1170|LG/회귀/NRMSE|
 |[따릉이 대여량 예측](https://github.com/gtseo0606/Learned/tree/main/Dacon/%EB%8B%A8%EA%B5%AD%EB%8C%80%20%EB%94%B0%EB%A6%89%EC%9D%B4%20%EB%8C%80%EC%97%AC%EB%9F%89%20%EC%98%88%EC%B8%A1)|2022-06-28 ~ 2022-07-04|36/94|단국대/회귀/NMAE|
 
-### Dacon 대회 종료 후 참여
-
 |대회명|기간|특징|
 |------|---|---|
 |[KBO 타자 OPS 예측 / KBO](https://github.com/gtseo0606/Learned/tree/main/Dacon/KBO%20%EC%99%B8%EA%B5%AD%EC%9D%B8%20%ED%88%AC%EC%88%98%20%EC%8A%A4%EC%B9%B4%EC%9A%B0%ED%8C%85%20%EC%B5%9C%EC%A0%81%ED%99%94)|2022-06-21 ~ 2022-06-27|회귀/WRMSE|
@@ -19,7 +17,7 @@
 |[퇴근시간 버스승차인원 예측 / Bus Passengers Prediction](https://github.com/gtseo0606/Learned/tree/main/Dacon/%ED%87%B4%EA%B7%BC%EC%8B%9C%EA%B0%84%20%EB%B2%84%EC%8A%A4%EC%8A%B9%EC%B0%A8%EC%9D%B8%EC%9B%90%20%EC%98%88%EC%B8%A1)|2022-06-21 ~ 2022-06-23|회귀/RMSE|
 |[KBO 외국인 투수 스카우팅 최적화 / Pitcher Scouting](https://github.com/gtseo0606/Learned/tree/main/Dacon/KBO%20%EC%99%B8%EA%B5%AD%EC%9D%B8%20%ED%88%AC%EC%88%98%20%EC%8A%A4%EC%B9%B4%EC%9A%B0%ED%8C%85%20%EC%B5%9C%EC%A0%81%ED%99%94)|2022-06-23 ~ 2022-06-25|회귀/RMSE|
 
-### Kaggle 대회 종료 후 참여
+### Kaggle 
 
 |대회명|공부기간|
 |------|---|
