@@ -1,0 +1,439 @@
+
+https://www.youtube.com/watch?v=Yh4Fj-yDQWU
+1. 플롭스(FLOPS, FLoating point Operations Per Second)
+컴퓨터의 성능을 수치로 나타낼 때 주로 사용되는 단위이다. 
+초당 부동소수점 연산이라는 의미로 컴퓨터가 1초동안 수행할 수 있는 부동소수점 연산의 횟수를 기준으로 삼는다.
+
+2. 하드웨어 인식 신경 아키텍처 검색(HW-NAS)
+딥러닝 아키텍쳐 전문가가 아닌, 인공지능이 특정 하드웨어에 최적화된 딥러닝 모델을 자동으로 설계합니다. 
+다만, HW-NAS는 엄청난 양의 컴퓨팅 시간이 요구되기 때문에 일반적인 사용자들이 사용하기에는 적합하지 않습니다. 
+제가 발표할 주제는 HW-NAS에서의 컴퓨팅 비용을 크게 줄이는 방법입니다. 
+이를 위해서 정확도 예측기(accuracy predictor)와 대기 시간 추정기(latency estimator)를 개발했습니다. 
+이를 통해서, 전체 검색에 소요되는 시간이 GPU를 사용했을 때에도 수 일 또는 수 주가 걸리는 것을 CPU에서 1분 미만으로 단축했습니다. 
+또한, HW-NAS를 위해서 필요한 다중 목표 최적화(multi-objective optimization)를 위한 새로운 방법인 세분화 기반 선택(segmentation-based selection)을 소개합니다.
+https://www.youtube.com/watch?v=dcH5RiBrMx8
+
+
+========================================================================================================================
+
+https://m.blog.naver.com/kangdonghyun/221316167111
+NetAdapt
+Platform Aware Neural Network Adaptation for Mobile Applications (MIT, Google)
+논문의 전체 개괄은 간단하다. ( 3 줄 요약 )
+
+1. 자동 최적화
+2. 지금까지 다른 연구들은 MACs / FLOPs 를 줄이는 방향을 Objective function으로 설정하였는데, 
+우린 더 실용적인 Latency / Energy consumption 과 같은 "Direct Metric"을 기준으로 최적화
+3. 이 방법을 통해 주어진 Constraint에 맞추면서 다른 연구들보다 더 높은 Accuracy 얻었다
+
+========================================================================================================================
+https://housekdk.gitbook.io/ml/ml/deployment/mobilenet#mobilenet-v3-2019-05
+MobileNets(V2)
+
+MobileNet-v1에서 1x1 Convolution으로 계산량을 줄였지만 
+(Pointwise Convolution으로 인해 1x1 Convolution의) 계산이 여전히 많기 때문에 
+이 부분을 Bottleneck Residual Block으로 개선
+
+Linear Bottlenecks + Inverted Residuals
+Linear Bottlenecks
+등장배경
+차원 축소 시 ReLU와 같은 비선형 함수에 의해 문제가 발생
+ 만약 ReLU를 지난 출력이 S인 경우, S > 0이면, S에 mapping 된 input의 각 값은 linear transformation된 것
+ Linear transformation 결과는 정보 손실이 없지만, 0 이하의 값은 모두 버려지기에 정보 손실 발생 (즉, 입력 채널의 정보를 activation space에 전부 담지 못함)
+
+해결
+1. 채널 확장
+Channel reduction이 아닌 channel expansion을 이용 
+(직관적으로 고차원의 space일수록 정보가 손실될 가능성이 줄어듦) 
+→ Inverted Residual 의 주요 아이디어
+
+2. Relu X
+Residual Block의 last convolution에 ReLU activation을 적용하지 않고 곧바로 linear output으로 출력
+
+Inverted Residuals
+Pointwise의 계산량을 더욱 줄이기 위한 방법
+기존 ResNet의 Residual Block이 thick-thin-thick 구조였다면, MobileNet-v2에서는 thin-thick-thin으로 변경
+채널 수는 Inverted Residual Block에서만 늘림
+
+
+Bottleneck Residual Block
+3개의 sub-block들로 구성
+1. Expansion Convolution → 2. Depthwise Convolution → 3. Projection Convolution
+
+1. Expansion: 1x1 Conv로 채널을 키우고 BN(배치정규화) - ReLU6 수행 
+(Expansion Factor(채널을 몇 배 키울 건지) t는 하이퍼파라미터로 5~10를 주로 사용하고 보통 6을 설정-> 채널 6배 증가)
+ex. 56x56x24                       ->                  56x56x144
+                  expansion convolution(factor=6) 
+
+2. Depthwise: 3x3 Depthwise Conv → BN → ReLU6
+ex. 56x56x144                ->              56x56x144
+                   depthwise convolution
+
+3. Projection: sub-space로 임베딩
+1x1 Conv로 채널을 줄이고(linear bottleneck) BN 수행
+ex. 56x56x24                  ->        56x56x144
+                  projection convolution
+
+
+# 모바일넷 v2
+class MobileNetV2(nn.Module):
+    def __init__(self,
+                 num_classes=1000,
+                 width_mult=1.0,
+                 inverted_residual_setting=None, # 
+                 round_nearest=8,
+                 block=None, # InvertedResidual
+                 norm_layer=None # nn.BatchNorm2d
+                  ):
+        """
+        MobileNet V2 main class
+        Args:
+            num_classes (int): Number of classes
+            width_mult (float): 너비 승수 - 이 양만큼 각 레이어의 채널 수를 조정합니다.
+            inverted_residual_setting: 네트워크 구조
+            round_nearest (int): 각 레이어의 채널 수를 이 수의 배수로 반올림합니다. 반올림을 끄려면 1로 설정
+            block: 모바일넷을 위한 반전 잔여 빌딩 블록을 지정하는 모듈
+            norm_layer: 사용할 정규화 계층을 지정하는 모듈
+        """
+        super(MobileNetV2, self).__init__()
+
+        if block is None:
+            block = InvertedResidual
+
+        if norm_layer is None:
+            norm_layer = nn.BatchNorm2d
+
+        # 채널 수
+        input_channel = 32
+        last_channel = 1280
+
+        if inverted_residual_setting is None:
+            inverted_residual_setting = [
+                # t(팽창계수), c(output channel), n(반복횟수), s(stride)
+                [1, 16, 1, 1],
+                [6, 24, 2, 2],
+                [6, 32, 3, 2],
+                [6, 64, 4, 2],
+                [6, 96, 3, 1],
+                [6, 160, 3, 2],
+                [6, 320, 1, 1],
+            ]
+
+        # 사용자가 t,c,n,s가 필요하다는 것을 알고 있다고 가정하고 첫 번째 요소만 확인합니다.
+        if len(inverted_residual_setting) == 0 or len(inverted_residual_setting[0]) != 4:
+            raise ValueError("inverted_residual_setting should be non-empty "
+                             "or a 4-element list, got {}".format(inverted_residual_setting))
+
+        # 첫 번째 레이어 구축
+        input_channel = _make_divisible(input_channel * width_mult, round_nearest)
+        self.last_channel = _make_divisible(last_channel * max(1.0, width_mult), round_nearest)
+        features = [ConvBNReLU(3, input_channel, stride=2, norm_layer=norm_layer)]
+        # building inverted residual blocks
+        for t, c, n, s in inverted_residual_setting:
+            output_channel = _make_divisible(c * width_mult, round_nearest)
+            for i in range(n):
+                stride = s if i == 0 else 1
+                features.append(block(input_channel, output_channel, stride, expand_ratio=t, norm_layer=norm_layer))
+                input_channel = output_channel
+        # building last several layers
+        features.append(ConvBNReLU(input_channel, self.last_channel, kernel_size=1, norm_layer=norm_layer))
+        # make it nn.Sequential
+        self.features = nn.Sequential(*features)
+
+        # building classifier
+        self.classifier = nn.Sequential(
+            nn.Dropout(0.2),
+            nn.Linear(self.last_channel, num_classes),
+        )
+
+        # weight initialization
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out')
+                if m.bias is not None:
+                    nn.init.zeros_(m.bias)
+            elif isinstance(m, (nn.BatchNorm2d, nn.GroupNorm)):
+                nn.init.ones_(m.weight)
+                nn.init.zeros_(m.bias)
+            elif isinstance(m, nn.Linear):
+                nn.init.normal_(m.weight, 0, 0.01)
+                nn.init.zeros_(m.bias)
+
+    def _forward_impl(self, x):
+        # This exists since TorchScript doesn't support inheritance, so the superclass method
+        # (this one) needs to have a name other than `forward` that can be accessed in a subclass
+        x = self.features(x)
+        # Cannot use "squeeze" as batch-size can be 1 => must use reshape with x.shape[0]
+        x = nn.functional.adaptive_avg_pool2d(x, 1).reshape(x.shape[0], -1)
+        x = self.classifier(x)
+        return x
+
+    def forward(self, x):
+        return self._forward_impl(x)
+
+
+def mobilenet_v2(pretrained=False, progress=True, **kwargs):
+    """
+    Constructs a MobileNetV2 architecture from
+    `"MobileNetV2: Inverted Residuals and Linear Bottlenecks" <https://arxiv.org/abs/1801.04381>`_.
+    Args:
+        pretrained (bool): If True, returns a model pre-trained on ImageNet
+        progress (bool): If True, displays a progress bar of the download to stderr
+    """
+    model = MobileNetV2(**kwargs)
+    if pretrained:
+        state_dict = load_state_dict_from_url(model_urls['mobilenet_v2'],
+                                              progress=progress)
+        model.load_state_dict(state_dict)
+    return model
+
+
+
+========================================================================================================================
+
+MobileNets(V3)
+
+주요 변경점
+1. AutoML 적용; 
+   -Platform(Hardware)-aware NAS(Network Architecture Search)와 NetAdapt 조합
+      - NAS로 자동으로 최적 아키텍처를 찾고 NetAdapt 를 적용하여 target 디바이스에 맞게 자동으로 압축
+2. Bottleneck에 Squeeze-and-Excite 모듈을 도입
+3. h-swish activation 사용
+
+NetAdapt 알고리즘 및 그 도움을 받아 
+Hardware-aware NAS(Network Architecture Search), novel architecture advances에 기반해 있다.
+이 논문은 어떻게 자동화된 탐색 알고리즘(automated search algorithm)과 네트워크 디자인을 어떻게 사용하는지 보여준다. 2가지 크기의 모델을 제안하는데,
+
+NAS(Network Architecture Search)
+- MnasNet와 유사한 방법으로 최적의 아키텍처 탐색
+-- FLOP 대신 target 디바이스의 latency를 줄이기 위한 목적 함수를 설정하여 강화 학습으로 훈련
+
+- 이렇게 찾은 아키텍처를 분석해 보니 네트워크의 앞단과 끝단이 비효율적인 것을 확인
+
+- 따라서 accuracy를 유지하면서도 latency를 줄이기 위해 몇 가지 개선 방법들을 제안
+-- projection layer를 average pooling layer 뒤에 보냄 → 7x7 spatial resolution 연산이 1x1 spatial resolution으로 저감
+-- 이전 bottleneck layer의 projection과 filtering layer 제거
+
+
+개선점
+1. MobileNetV3-Large
+MobileNetV2에 비해 latency는 20% 줄이면서도 정확도는 3.2% 더 높다.
+MobileNetV3-Large: MobileNetV2에 비해 ImageNet classification에서 3.2% 더 높은 정확도 &  20%의 개선된 latency, MS COCO dataset에서도 약 25% 더 빠름
+
+2. MobileNetV3-Large LR-ASPP
+Cityspaces segmentation에서 MobileNetV2 R-ASPP보다 비슷한 정확도를 가지면서 34% 더 빠르다.
+MobileNetV3-Large LR-ASPP(Lite Reduced Atrous Spatial Pyramid Pooling): MobileNetV2 R-ASPP에 비해 Cityspace segmentation에서 34% 빠르고 비슷한 정확도
+
+3. MobileNetV3-Small
+MobileNetV2에 비해 정확도는 비슷하면서 25% 더 빠르다.
+MobileNetV3-Small: MobileNetV2에 비해 비슷한 latency로 6.6% 더 정확
+
+각각 자원을 더 많이 쓰냐 적게 쓰냐의 차이가 있다.
+또 Semantic Segmentation task에서는 Lite Reduced Atrous Spatial Pyramid pooling(LR-ASPP)라는 새로운 효율적인 decoder를 제안한다.
+
+
+Squeeze and Excitation
+ILSVRC 2017에서 우승한 아키텍처로 SE(Squeeze and Excitation) Block 사용
+
+1. Squeeze=pooling : 각 feature map에 대한 전체 정보 요약
+HxWxC 크기의 feautre map을 Global Average Pooling을 통해 1x1xC로 변환
+
+2. Excitation : 각 feature map의 중요도를 Recalibation(교정)을 통해 스케일링
+FCN → ReLU → FCN → Sigmoid 사용
+임의의 네트워크(VGG, ResNet 등)에 SE block을 마음껏 붙일 수 있음
+
+def se_block(input, channels, r=8):
+    # Squeeze
+    x = GlobalAveragePooling2D()(input)
+    # Excitation
+    x = Dense(channels//r, activation="relu")(x)
+    x = Dense(channels, activation="sigmoid")(x)
+    return Multiply()([input, x])
+
+MobileNet v3-small/large
+하이퍼파라메터
+RMSProp Optimizer with 0.9 momentum
+초기 learning rate = 0.1, batch size = 4096 (128 images per chip), learning rate decay rate는 3 epoch마다 0.01
+Dropout = 0.8
+L2 weight decay = 1e-5
+Decay = 0.9999의 exponential moving average 사용함
+
+
+https://housekdk.gitbook.io/ml/ml/deployment/mobilenet#mobilenet-v3-2019-05
+
+
+
+
+
+===================================================
+
+chapter8 : NASA
+
+-train.csv
+dataset_id	
+unit_id	
+cycle	
+setting 1	~ 21
+
+=============================
+-simple_fm.csv
+engine_no
+
+LAST(recordings.index)
+LAST(recordings.time_in_cycles)
+
+LAST(recordings.sensor_measurement_1~21)
+LAST(recordings.operational_setting_1~3)
+
+MAX(recordings.sensor_measurement_1~21)
+MAX(recordings.operational_setting_1~3)
+
+MIN(recordings.sensor_measurement_1~21)	
+MIN(recordings.operational_setting_1~3)	
+
+LAST(recordings.cycles.MAX(recordings.sensor_measurement_1~21))
+LAST(recordings.cycles.LAST(recordings.sensor_measurement_1~21))	
+LAST(recordings.cycles.MIN(recordings.sensor_measurement_1~21))	
+LAST(recordings.cycles.LAST(recordings.operational_setting_1~3))
+LAST(recordings.cycles.MAX(recordings.operational_setting_1~3))
+LAST(recordings.cycles.MIN(recordings.operational_setting_1~3))
+LAST(recordings.cycles.LAST(recordings.index))
+LAST(recordings.cycles.LAST(recordings.engine_no))
+
+MAX(recordings.cycles.MAX(recordings.sensor_measurement_1~21))
+MAX(recordings.cycles.MAX(recordings.sensor_measurement_1~21))
+MAX(recordings.cycles.LAST(recordings.sensor_measurement_1~21))	
+MAX(recordings.cycles.MIN(recordings.sensor_measurement_1~21))	
+MAX(recordings.cycles.LAST(recordings.operational_setting_1~3))
+MAX(recordings.cycles.MAX(recordings.operational_setting_1~3))
+MAX(recordings.cycles.MIN(recordings.operational_setting_1~3))
+
+MIN(recordings.cycles.MAX(recordings.sensor_measurement_1~21))
+MIN(recordings.cycles.MAX(recordings.sensor_measurement_1~21))
+MIN(recordings.cycles.LAST(recordings.sensor_measurement_1~21))	
+MIN(recordings.cycles.MIN(recordings.sensor_measurement_1~21))	
+MIN(recordings.cycles.LAST(recordings.operational_setting_1~3))
+MIN(recordings.cycles.MAX(recordings.operational_setting_1~3))
+MIN(recordings.cycles.MIN(recordings.operational_setting_1~3))
+
+remaining_useful_life
+===================================================
+Featuretools
+
+Featuretools는 자동화된 기능 엔지니어링을 수행하는 프레임워크입니다. 
+시간 및 관계형 데이터 세트를 기계 학습을 위한 기능 매트릭스로 변환하는 데 탁월합니다.
+
+5분 빠른 시작
+다음은 DFS(Deep Feature Synthesis)를 사용하여 자동화된 기능 엔지니어링을 수행하는 예입니다. 
+이 예에서는 타임스탬프가 지정된 고객 트랜잭션으로 구성된 다중 테이블 데이터 세트에 DFS를 적용합니다.
+
+
+
+============================
+https://www.cognex.com/ko-kr/blogs/deep-learning/research/anomaly-detection-overview-1-introduction-anomaly-detection
+이상치 탐지
+Anomaly Detection이 적용될 수 있는 주요 사례는 다음과 같습니다.
+
+1. Cyber-Intrusion Detection: 
+컴퓨터 시스템 상에 침입을 탐지하는 사례. 
+주로 시계열 데이터를 다루며 RAM, file system, log file 등 일련의 시계열 데이터에 대해 이상치를 검출하여 침입을 탐지함.
+2. Fraud Detection: 
+보험, 신용, 금융 관련 데이터에서 불법 행위를 검출하는 사례. 
+주로 표로 나타낸(tabular) 데이터를 다루며 Kaggle Credit Card Fraud Detection 과 같은 공개된 challenge도 진행된 바 있음.
+3. Malware Detection: 
+Malware(악성코드)를 검출해내는 사례. 
+Classification과 Clustering이 주로 사용되며 Malware tabular 데이터를 그대로 이용하기도 하고 이를 gray scale image로 변환하여 이용하기도 함.
+4. Medical Anomaly Detection: 
+의료 영상, 뇌파 기록 등의 의학 데이터에 대한 이상치 탐지 사례. 
+주로 신호 데이터와 이미지 데이터를 다루며 X-ray, CT, MRI, PET 등 다양한 장비로부터 취득된 이미지를 다루기 때문에 난이도가 높음.
+
+척추 탐지
+--https://www.kaggle.com/competitions/rsna-2022-cervical-spine-fracture-detection/code
+
+--(a) 신장의 사구체, (b) 대장의 선와, (c) 폐의 폐포, (d) 전립선의 선엽, (e) 비장의 백색 펄프.
+(https://www.kaggle.com/code/yashvrdnjain/background-information/notebook)
+
+5. Social Networks Anomaly Detection: 
+Social Network 상의 이상치들을 검출하는 사례. 
+주로 Text 데이터를 다루며 Text를 통해 스팸 메일, 비매너 이용자, 허위 정보 유포자 등을 검출함.
+6. Log Anomaly Detection: 
+시스템이 기록한 log를 보고 실패 원인을 추적하는 사례. 
+주로 Text 데이터를 다루며 pattern matching 기반의 단순한 방법을 사용하여 해결할 수 있지만 failure message가 새로운 것이 계속 추가, 제외가 되는 경우에 딥러닝 기반 방법론을 사용하는 것이 효과적임.
+7. IoT Big-Data Anomaly Detection: 
+사물 인터넷에 주로 사용되는 장치, 센서들로부터 생성된 데이터에 대해 이상치를 탐지하는 사례. 
+주로 시계열 데이터를 다루며 여러 장치들이 복합적으로 구성이 되어있기 때문에 난이도가 높음.
+8. Industrial Anomaly Detection: 
+산업 속 제조업 데이터에 대한 이상치를 탐지하는 사례. 
+각종 제조업 도메인 이미지 데이터에 대한 외관 검사, 장비로부터 측정된 시계열 데이터를 기반으로 한 고장 예측 등 다양한 적용 사례가 있으며, 외관상에 발생하는 결함과, 장비의 고장 등의 비정상적인 sample이 굉장히 적은 수로 발생하지만 정확하게 예측하지 못하면 큰 손실을 유발하기 때문에 난이도가 높음.
+9. Video Surveillance: 
+비디오 영상에서 이상한 행동이 발생하는 것을 모니터링하는 사례. 
+주로 CCTV를 이용한 사례가 주를 이루며, 보행로에 자전거, 차량 등이 출현하는 비정상 sample, 지하철역에서 넘어짐, 싸움 등이 발생하는 비정상 sample 등 다양한 종류의 비정상 케이스가 존재함.
+
+--
+딥러닝 기술에 기반한 사용자 이동 경로의 이상치 탐지 기법
+
+https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE11165806
+http://ki-it.com/_common/do.php?a=current&b=21&bidx=3124&aidx=34786
+
+
+trajectory Data : 궤도 데이터
+Grid Matrix -> 1. CNN
+Grid Vector -> 2. DNN, 3. LSTM, 4. Bi-LSTM, 5. LSTM autoencoder
+
+1. CNN
+7x11행렬 -> 3x3x32 -> ReLU -> 3x3x64 -> ReLU -> Pooling -> dropout 0.25 -> flatten -> Dense 128 -> ReLU -> dropout 0.5 -> sigmoid -> BCE
+
+2. DNN
+G65, G54, G53 ... G13 -> {65, 54, 53, ... ,13} -> {0.84, 0.70, 0.69, ..0.17} # 13개의 벡터
+Dense 256 -> ReLU -> Dense 256 -> ReLU -> dropout 0.25 -> Dense 128 -> ReLU -> dropout 0.5 -> sigmoid
+
+3. LSTM
+-> Embedding -> Dropout 0.50 -> LSTM 32 -> LSTM 16 -> sigmoid
+
+4. Bi-LSTM
+-> Embedding -> Dropout 0.50 -> LSTM 16 -> Bidirectional LSTM 16 -> sigmoid
+
+5. LSTM autoencoder
+encoding -> latent representation -> decoding 
+
+
+
+MNIST : class 10개, train 5만개, test 1만개, 28x28
+CIFAR-10(Canadian Institute For Advanced Research) : class 10개, train 5만개, test 1만개, 클래스마다 6,000장씩 총 60,000장, 32x32  , 
+CIFAR-100 : class 100개, train 5만개, test 1만개, 클래스마다 600장씩 총 60,000장
+ImageNet : class 1000개, trian 120만개(138GB), val 5만개(6GB), 
+
+
+
+
+================
+ADBench : Anomaly Dectection Benchmark
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
