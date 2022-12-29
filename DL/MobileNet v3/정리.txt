@@ -1,0 +1,110 @@
+small
+==========================
+
+Operator : bottleneck
+
+in : in_channels 
+k : kernel_size
+out : out_channels
+exp : exp size 
+SE : Squeeze and Excite 
+NL(Non-Linear) : ReLU/h-swish 
+s : stride
+-> [16, 3, 16, 16, False, 'RE', 1]
+NBN : No Batch Normalization
+
+==========================
+
+1. Operator : conv2d 3x3
+Input = 224x224x3
++ 3x3x3x16
+-> 112x112x16
+---------------------------------------------------------------------
+2. Operator : bneck 3x3
+Input = 112x112x16
+in, k, out, exp, SE, NL, s = [16, 3, 24, 72, True, 'RE', 2]
+-> 56x56x16
+
+3. Operator : bneck 3x3
+Input = 56x56x16
+in, k, out, exp, SE, NL, s = [24, 3, 24, 72, False, 'RE', 2]
+-> 28x28x24
+---------------------------------------------------------------------
+5. Operator : bneck 3x3
+Input = 28x28x24
+in, k, out, exp, SE, NL, s = [24, 3, 40, 88, False, 'RE', 1]
+-> 28x28x24
+
+6. Operator : bneck 5x5
+Input = 28x28x24
+in, k, out, exp, SE, NL, s = [40, 5, 40, 96, True, 'HS', 2]
+-> 14x14x40
+---------------------------------------------------------------------
+7. Operator : bneck 5x5
+Input = 14x14x40
+in, k, out, exp, SE, NL, s = [40, 5, 40, 240, True, 'HS', 1]
+-> 14x14x40
+
+8. Operator : bneck 5x5
+Input = 14x14x40
+in, k, out, exp, SE, NL, s = [40, 5, 40, 240, True, 'HS', 1]
+-> 14x14x40
+9. Operator : bneck 5x5
+Input = 14x14x40
+in, k, out, exp, SE, NL, s = [40, 5, 48, 120, True, 'HS', 1]
+-> 14x14x48
+---------------------------------------------------------------------
+
+10. Operator : bneck 5x5
+Input = 14x14x48
+in, k, out, exp, SE, NL, s = [40, 5, 48, 144, False, 'HS', 1]
+-> 14x14x48
+
+11. Operator : bneck 5x5
+Input = 14x14x48
+in, k, out, exp, SE, NL, s = [48, 5, 96, 288, False, 'HS', 2]
+-> 14x14x48
+
+---------------------------------------------------------------------
+12. Operator : bneck 5x5
+Input = 14x14x48
+in, k, out, exp, SE, NL, s = [48, 5, 96, 576, True, 'HS', 1]
+-> 7x7x96
+
+13. Operator : bneck 5x5
+Input = 7x7x96
+in, k, out, exp, SE, NL, s = [112, 3, 112, -, True, 'HS', 1]
+-> 7x7x96
+
+14. Operator : bneck 5x5
+Input = 7x7x96
+in, k, out, exp, SE, NL, s = [112, 5, 160, 672, True, 'HS', 2]
+-> 7x7x96
+---------------------------------------------------------------------
+15. Operator : bneck 5x5
+Input = 7x7x160
+in, k, out, exp, SE, NL, s = [160, 5, 160, 960, True, 'HS', 1]
+-> 7x7x160
+
+16. Operator : bneck 5x5
+Input = 7x7x160
+in, k, out, exp, SE, NL, s = [160, 5, 160, 960, True, 'HS', 1]
+-> 7x7x960
+
+17. Operator : conv2d 1x1
+Input = 7x7x160 
+-> 7x7x160
+---------------------------------------------------------------------
+18. Operator : avg_pooling 7x7
+Input = 7x7x960 
+-> 1x1x960
+---------------------------------------------------------------------
+19. Operator : conv2d 1x1, NBN
+Input = 1x1x960
++ 1x1x1280
+-> 1x1x1280
+
+20. Operator : conv2d 1x1, NBN
+Input = 1x1x1280
++ 1x1xk
+-> 1x1xk
