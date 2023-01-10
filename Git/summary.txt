@@ -1,0 +1,23 @@
+git
+​
+git add : 
+git commit -m '파일만들었음' : 
+​
+git diff : 변경사항​ 확인
+git difftool : 더 시각적을 예쁘게 변경사항을 볼수있음
+​
+git log --online --all : 커밋내역 보기
+git log --online --all --graph : 커밋내역 보기
+​
+git difftool a91bc66(커밋아이디) : 현재파일 vs 커밋파일 비교 가능
+git difftool a91bc66 ea46f1b : 커밋파일1 vs 커밋파일2 비교 가능​
+​
+git branch coupon(브랜치명) : 브랜치 생성
+git switch main(브랜치명)​ : 원래 브랜치로 이동
+​
+​
+​
+​
+​
+​
+​
