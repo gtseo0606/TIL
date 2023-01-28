@@ -94,15 +94,34 @@ backbone이 하나이고 8번을 사용하는 것인 지, 8개의 backbone을 �
 반면 서로 다른 backbone을 사용한다면 각 이미지의 feature를 추출할 수 있도록 학습을 할 수 있고 입력 이미지의 크기 또한 통일할 필요는 없습니다. 단, backbone의 weight들을 backbone 갯수 만큼 더 저장해야하므로 메모리 문제가 있을 수 있습니다.
 이와 같은 점들을 고려하여 각 카메라의 입력 이미지의 사이즈를 정의한 것으로 추정합니다.
 
+### Occupancy Network Architecture
+8개의 입력을 받은 후 backbone과 Attention 메커니즘을 이용하여 어떻게 Occupancy Features를 생성하는 지 살펴보도록 하겠습니다.
+![image](https://user-images.githubusercontent.com/74644453/215271768-ae8bc1fc-76d4-4388-9b10-296f9ba32deb.png)
+위 architecture와 같이 각 이미지를 입력으로 받아서 backbone을 통하여 해상도는 줄이고 채널 수는 늘이는 방향으로 feature를 생성합니다. 이 때, 사용한 구조는 RegNet과 BiFPN 구조를 사용하였습니다. 2021 CVPR Workshop과 2021 AI Day에서 발표한 내용에서도 RegNet과 BiFPN을 사용하였었는데 변경이 되지 않은 점을 보았을 때, backbone으로써 충분히 효과가 있는 것으로 보입니다.
+backbone을 통하여 feature extraction을 거친 후 Image Positional Encoding (파란색 블록 중간)이 feature에 추가된 이후 Attention 과정이 진행 됩니다.
+보라색 블럭의 시작을 보면 Positional Encoding이 있는 데 Positional Encoding에서 부터 시작하여 Attention에 사용할 Query를 만들고 파란색 블럭의 최종 feature에서 Key와 Value 가져와서 Attention 구조를 만듭니다.
+발표 내용에 의하면 이 Attention 메커니즘의 목적은 Query를 통해 Occupancy에서 3D point가 존재하는 지 존재하 지 않는 지 확인하기 위함이라고 말합니다. 따라서 fixed queries의 목적은 3D 공간에서 각 분할된 공간이 차인 지 아닌 지, 표지판인 지 아닌 지 등에 대한 의미를 가지도록 학습이 되어야 한다고 추정합니다.
+각 Positional Encoding은 기존에 Nerf에서 사용되는 방식으로 구성되는 것으로 추정하며 3D Occupancy Feature를 reconstruction 하는 데 도움이 되기 위하여 주파수 도메인의 Fourier Feature를 추가한 것으로 추정합니다.
+이 과정을 통하여 최종적으로 Occupancy Feature를 생성합니다.
 
+![image](https://user-images.githubusercontent.com/74644453/215271795-0eeb7afd-6990-4a4a-9be5-518a3bae3ca7.png)
+생성된 Occupancy Feature는 Low Resolution이기 때문에 (계산 효율 상 Los Resolution으로 생성한 것으로 추정함) 원하는 크기의 High Resolution으로 크기를 키웁니다. 위 슬라이드와 같이 Deconvolutions 작업을 통해 해상도를 키우는 데 일반적으로 Feature의 크기를 키우는 Transposed Convolution 또는 Interpolation + Convolution과 같은 방법을 사용하였을 것으로 추정합니다.
 
+![image](https://user-images.githubusercontent.com/74644453/215271806-674acb77-f7f7-4d84-ac1d-bd52ff38e5d6.png)
+그런데 앞에서 살펴본 출력을 보면 출력의 종류가 다양하지 않은 것을 알 수 있습니다. 위 그림에서도 보면 자차, 주변 차량, 도로 정도로 굉장히 단순화 되어 있습니다.
+이러한 컨셉을 도입한 이유는 충돌 문제를 개선하기 위하여 단순히 해당 영역 (Voxel)에 물체가 Occupy가 되어 있는 지 여부를 확인하기 위한 것으로 소개합니다. (+ AI DAY의 추가 설명 확인 시, 클래스 구분은 다른 네트워크를 이용합니다.)
 
+![image](https://user-images.githubusercontent.com/74644453/215271813-1c176abb-d28f-4d07-afd8-a6a3859e8b84.png)
+위 슬라이드의 제목은 Geometry > Ontology 라는 내용으로 시작합니다. 즉, Ontology 보다는 Geometry를 사용하겠다는 내용이며 소제목으로 Things can slip through the ontology cracks 라고 표현합니다. 즉, Ontology 라는 것을 통해서는 알아차리지 못하는 것들이 있다는 뜻입니다.
+여기서 Ontology의 뜻은 물체들의 유형을 어떻게 계층 별로 나눌 지 방법론에 관한 것입니다.
+예를 들면 자동차는 승용차, 상용차 등으로 나눌 수 있고 그 하위 항목으로 이륜차, 사륜차 등으로 나눌 수 있으며 또 그 하위에서 차, 트럭, 버스 등으로 나눌 수 있습니다.
+따라서 딥러닝 모델이 인식한 물체를 분류를 할 때, 사전에 설계한 계층 분류도를 Ontology 라고 말할 수 있습니다.
+Ontology의 한계점은 사전에 고려하지 못한 유형의 객체가 나타났을 때 어떤 분류에 속하지 못하는 경우에 발생하며 꽤 빈번하게 발생할 수 있습니다.
 
-
-
-
-
-
+![image](https://user-images.githubusercontent.com/74644453/215271823-f2e77f67-2316-4619-a445-294d731bcd88.png)
+위 영상은 테슬라에서 겪은 Ontology의 한계점 중 하나를 나타냅니다.
+위 영상에 문제가 되는 부분은 컨테이너를 옮기는 차량의 컨테이너에서 발생합니다. 만약 딥러닝 모델이 움직이는 차량을 인식하고 Ontology에 대형 트럭이 있는 경우 사전에 인식이 가능할 수 있습니다. 하지만 신호에 대기하여 장시간 정차되고 컨테이너의 뒷모습만 보인다면 Ontology에 속하지 않아서 인식 하지 못하는 경우가 발생합니다.
+따라서 사전에 분류되지 못하여 학습하지 못한 데이터는 인지하지 못한다는 한계점을 보여주는 예시입니다.
 
 
 
