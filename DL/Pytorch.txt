@@ -1,0 +1,76 @@
+Pytorch : Python을 위한 오픈소스 머신 러닝 라이브러리
+> torch
+> torch.nn(모듈=파일) : 신경망 모델을 정의하기 위한 클래스들을 포함하는 모듈
+모듈 변수 + 함수 + 클래스 = 모듈 파일 (module.py)
+모듈 사용: import module
+
+torch.optim : 최적화 알고리즘,함수(AdamW)을 포함하는 모듈
+
+torch.nn.functional : 함수형 API를 포함하는 모듈 = 활성화함수(activation) + 손실함수(loss)
+
+torch.optim.lr_scheduler : 학습률 스케줄링(학습 중 학습률을 동적으로 조정)을 위한 클래스들을 포함하는 모듈, ReduceLROnPlateau​
+
+> nn.Module(클래스) : 모듈이라 불리는 클래스임
+> CustomModel(nn.Module 클래스를 상속받은 사용자 정의 모델 클래스)​​
+torch.utils.data.Dataset : 데이터셋을 로드하고 학습에 사용하기 위한 추상 클래스(상속받아 커스텀 데이터셋 클래스를 정의 가능)
+torch.utils.data.DataLoader : 데이터셋을 미니배치로 나누어 학습에 사용하기 위한 클래스​
+​
+# nn.Module 클래스를 상속받은 사용자 정의 모델 클래스 : CustomModel
+class CustomModel(nn.Module):
+    def __init__(self, input_size, hidden_size, output_size):
+   
+​
+# Dataset 클래스를 상속받아 사용자 정의 데이터셋인 MyDataset
+class MyDataset(Dataset):
+    def __init__(self, df, eval_mode):
+        self.df = df # self. -> 인스턴스 변수
+        self.eval_mode = eval_mode
+        if self.eval_mode:
+            self.labels = self.df['Class'].values
+            self.df = self.df.drop(columns=['Class']).values
+        else:
+            self.df = self.df.values
+
+    # index에 해당하는 데이터와 레이블 반환    
+    def __getitem__(self, index): 
+        if self.eval_mode:
+            x = torch.from_numpy(self.df[index]).type(torch.FloatTensor)
+            y = torch.FloatTensor([self.labels[index]])
+            return x, y
+        else:
+            self.x = self.df[index]
+            return torch.Tensor(self.x)
+        
+    def __len__(self):
+        return len(self.df)
+
+
+
+class Person: # 클래스
+   def __init__(self, name, age): # "name"과 "age"라는 속성(attribute)
+       self.name = name
+       self.age = age
+​
+   def say_hello(self): # say_hello"와 "introduce"라는 메서드(method)
+       print(f"안녕하세요, 저는 {self.name}입니다.")
+​
+   def introduce(self):
+       print(f"저는 {self.age}살 {self.name}입니다.")
+​​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
+​
