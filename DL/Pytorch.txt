@@ -1,3 +1,5 @@
+https://3months.tistory.com/368
+
 Pytorch : Python을 위한 오픈소스 머신 러닝 라이브러리
 > torch
 > torch.nn(모듈=파일) : 신경망 모델을 정의하기 위한 클래스들을 포함하는 모듈
